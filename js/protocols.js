@@ -68,6 +68,17 @@ export const PROTOCOLS = [
     params: { prepare: 5, tension: 25, restIntra: 90, reps: 6, sets: 1, restInter: 180 }
   },
   {
+    id: 'no-hang-abrahamsson',
+    name: 'No-hang Abrahamsson',
+    goal: 'Santé tendineuse, base à haute fréquence',
+    level: 'Débutant / Tous niveaux',
+    grip: 'Grosse prise ou bloc, basse intensité (jamais maximal)',
+    heavy: false,
+    safety: 'Basse intensité, sans forcer, idéalement 2×/jour presque quotidiennement. Monte la charge très progressivement dans le temps.',
+    adjustable: ['tension', 'restIntra', 'reps', 'sets', 'restInter'],
+    params: { prepare: 5, tension: 10, restIntra: 90, reps: 5, sets: 2, restInter: 120 }
+  },
+  {
     id: 'no-hang-lift',
     name: 'No-hang / Lift',
     goal: 'Force max, charge précise et sûre',

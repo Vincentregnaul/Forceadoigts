@@ -2,8 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { PROTOCOLS, getProtocol } from '../js/protocols.js';
 
-test('il y a un échauffement + 5 protocoles de force', () => {
-  assert.equal(PROTOCOLS.length, 6);
+test('il y a un échauffement + 6 protocoles de force', () => {
+  assert.equal(PROTOCOLS.length, 7);
   assert.ok(PROTOCOLS.some(p => p.id === 'warmup'));
 });
 
