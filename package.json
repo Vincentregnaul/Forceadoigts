@@ -1,0 +1,10 @@
+{
+  "name": "crimp-force-a-doigt",
+  "version": "1.0.0",
+  "description": "PWA de coaching de force a doigt en escalade",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}
