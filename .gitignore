@@ -2,3 +2,10 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Secrets / cles API — NE JAMAIS committer
+Openai key.txt
+*.key
+*.pem
+.env
+.env.*
