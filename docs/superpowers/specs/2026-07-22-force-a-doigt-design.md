@@ -98,7 +98,7 @@ Deux modes de définition, tous deux réductibles à une **timeline de phases** 
   heavy: true,                 // → badge « échauffe-toi d'abord »
   safety: 'Ajuste la charge pour finir la dernière série avec effort. Stop si douleur articulaire.',
   params: {
-    prepare: 5,                // décompte « préparez-vous » avant chaque tension (s)
+    prepare: 5,                // décompte « préparez-vous » initial, avant la 1re tension (s)
     tension: 7,                // durée sous tension (s)
     restIntra: 3,              // repos entre reps (s)
     reps: 6,                   // reps par série
@@ -146,9 +146,11 @@ Transformer un protocole en **timeline** ordonnée de phases, puis dérouler cet
 ```
 
 ### Construction de la timeline (mode structuré)
-Pour chaque série (`sets`) : pour chaque rep (`reps`) : `prepare` → `tension` → `restIntra` (sauf après la dernière rep de la série). Entre deux séries : `restInter`. À la fin : `done`.
+Phase `prepare` **initiale unique** (début de séance, avant la première tension). Puis pour chaque série (`sets`) : pour chaque rep (`reps`) : `tension` → `restIntra` (sauf après la dernière rep de la série). Entre deux séries : `restInter`. À la fin : `done`.
 
-Exemple Repeaters (reps=6, sets=4) → 4 × [6 × (prepare + tension) + 5 × restIntra] + 3 × restInter + done.
+Les **3 dernières secondes de chaque phase de repos** émettent `countdown` (« 3, 2, 1 ») pour préparer la tension suivante — inutile de répéter une phase `prepare` avant chaque rep, ce qui casserait le rythme serré des Repeaters 7:3.
+
+Exemple Repeaters (reps=6, sets=4) → `prepare` + 4 × [6 × `tension` + 5 × `restIntra`] + 3 × `restInter` + `done`.
 
 ### Boucle temporelle
 - Un « tick » régulier (≈ 100 ms, via `setInterval` ou `requestAnimationFrame`) décrémente le temps restant de la phase courante.
