@@ -1,10 +1,10 @@
 // sw.js — service worker : cache-first pour un fonctionnement 100 % hors-ligne.
-const CACHE = 'crimp-v4';
+const CACHE = 'crimp-v5';
 const ASSETS = [
   '.', 'index.html', 'manifest.webmanifest',
   'css/styles.css',
   'js/app.js', 'js/protocols.js', 'js/timer-engine.js', 'js/cues.js',
-  'js/adapters.js', 'js/wake-lock.js', 'js/ui.js', 'js/ui-helpers.js',
+  'js/adapters.js', 'js/wake-lock.js', 'js/ui.js', 'js/ui-helpers.js', 'js/guide-content.js',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'
 ];
 

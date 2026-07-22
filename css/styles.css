@@ -88,3 +88,32 @@ body {
 .settings summary { cursor: pointer; color: var(--muted); }
 .settings label { display: flex; align-items: center; gap: 8px; padding: 8px 0; }
 .summary { font-size: 1.1rem; text-align: center; line-height: 1.6; }
+
+/* Guide & méthodologie */
+.guide h2 { font-size: 1.5rem; margin: 4px 0 6px; }
+.guide h3 { font-size: 1.1rem; margin: 22px 0 8px; color: var(--accent); }
+.guide p, .guide li { line-height: 1.55; font-size: 0.95rem; }
+.guide ul { padding-left: 20px; margin: 8px 0; display: flex; flex-direction: column; gap: 4px; }
+.guide .lead { color: var(--muted); margin-bottom: 8px; }
+.guide-callout { background: var(--card); border-left: 3px solid var(--accent); border-radius: 10px; padding: 12px 14px; margin: 14px 0; }
+.guide-callout strong { color: var(--accent); }
+.guide details { background: var(--card); border: 1px solid #232d38; border-radius: 12px; margin: 10px 0; padding: 2px 14px; }
+.guide summary { padding: 13px 0; font-weight: 600; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.guide summary::-webkit-details-marker { display: none; }
+.guide summary::after { content: '+'; color: var(--muted); font-size: 1.3rem; }
+.guide details[open] summary { color: var(--accent); }
+.guide details[open] summary::after { content: '–'; }
+.guide details .body { padding: 0 0 12px; }
+.guide .tag { font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; background: #232d38; color: var(--muted); }
+.guide table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 10px 0; display: block; overflow-x: auto; }
+.guide th, .guide td { text-align: left; padding: 7px 9px; border-bottom: 1px solid #232d38; white-space: nowrap; }
+.guide th { color: var(--muted); font-weight: 600; }
+.guide .src { font-size: 0.82rem; }
+.guide .src a { color: var(--rest); text-decoration: none; }
+.guide .src a:active { text-decoration: underline; }
+.guide .mini-gauge { display: inline-flex; gap: 3px; vertical-align: middle; margin-left: 6px; }
+.guide .mini-gauge i { width: 14px; height: 5px; border-radius: 3px; background: #2c3743; }
+.guide .mini-gauge.lvl-1 i.on, .guide .mini-gauge.lvl-2 i.on { background: var(--rest); }
+.guide .mini-gauge.lvl-3 i.on { background: var(--accent); }
+.guide .mini-gauge.lvl-4 i.on { background: var(--prepare); }
+.guide .mini-gauge.lvl-5 i.on { background: var(--danger); }

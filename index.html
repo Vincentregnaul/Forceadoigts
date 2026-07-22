@@ -21,6 +21,7 @@
         <p class="tagline">Coach de force à doigt</p>
       </header>
       <div id="protocol-list" class="cards"></div>
+      <button id="btn-open-guide" class="btn-secondary">📖 Guide &amp; méthodologie</button>
       <details class="settings">
         <summary>Guidage sonore</summary>
         <label><input type="checkbox" id="set-voice" checked /> Voix</label>
@@ -68,6 +69,12 @@
       <p id="summary-text" class="summary"></p>
       <button id="btn-restart" class="btn-primary">Refaire</button>
       <button id="btn-home" class="btn-secondary">Accueil</button>
+    </section>
+
+    <!-- Écran 5 : Guide & méthodologie -->
+    <section id="screen-guide" class="screen hidden">
+      <button id="btn-guide-back" class="link-back">‹ Retour</button>
+      <div id="guide-content"></div>
     </section>
 
   </main>
