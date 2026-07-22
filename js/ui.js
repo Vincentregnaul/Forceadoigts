@@ -37,9 +37,15 @@ export function createUI(handlers) {
     for (const p of protocols) {
       const card = document.createElement('button');
       card.className = 'card';
+      const lvl = p.intensity || 1;
+      const segs = [1, 2, 3, 4, 5].map(i => `<i class="${i <= lvl ? 'on' : ''}"></i>`).join('');
       card.innerHTML = `
         <h3>${p.name}</h3>
         <div class="goal">${p.goal}</div>
+        <div class="intensity">
+          <span class="int-label">Intensité</span>
+          <span class="gauge lvl-${lvl}">${segs}</span>
+        </div>
         <div class="badges">
           <span class="badge">${p.level}</span>
           <span class="badge">${p.grip}</span>

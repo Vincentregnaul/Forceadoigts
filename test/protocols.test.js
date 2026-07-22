@@ -47,3 +47,10 @@ test('getProtocol retrouve par id et renvoie undefined sinon', () => {
   assert.equal(getProtocol('repeaters-7-3').name, 'Repeaters 7:3');
   assert.equal(getProtocol('inexistant'), undefined);
 });
+
+test('chaque protocole a une intensité entière entre 1 et 5', () => {
+  for (const p of PROTOCOLS) {
+    assert.ok(Number.isInteger(p.intensity) && p.intensity >= 1 && p.intensity <= 5,
+      `${p.id}.intensity doit être un entier de 1 à 5`);
+  }
+});

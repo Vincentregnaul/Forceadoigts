@@ -1,10 +1,12 @@
 // Données déclaratives des protocoles de force à doigt.
 // Structuré : params {prepare,tension,restIntra,reps,sets,restInter}.
 // Steps : échauffement à intensité progressive.
+// intensity : 1 (très léger) à 5 (maximal) — sert à la jauge visuelle.
 
 export const PROTOCOLS = [
   {
     id: 'warmup',
+    intensity: 1,
     name: 'Échauffement progressif',
     goal: 'Préparer poulies et tendons',
     level: 'Tous niveaux',
@@ -25,6 +27,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'max-hangs-mad',
+    intensity: 5,
     name: 'Max Hangs (López MAD)',
     goal: 'Force maximale (recrutement)',
     level: 'Avancé',
@@ -36,6 +39,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'min-edge-med',
+    intensity: 4,
     name: 'Min Edge (López MED)',
     goal: 'Force maximale, plus sûr',
     level: 'Intermédiaire',
@@ -47,6 +51,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'repeaters-7-3',
+    intensity: 3,
     name: 'Repeaters 7:3',
     goal: 'Force-endurance / hypertrophie',
     level: 'Intermédiaire',
@@ -58,6 +63,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'density-hangs',
+    intensity: 2,
     name: 'Density hangs',
     goal: 'Hypertrophie, santé tendineuse',
     level: 'Tous niveaux',
@@ -69,6 +75,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'no-hang-abrahamsson',
+    intensity: 2,
     name: 'No-hang Abrahamsson',
     goal: 'Santé tendineuse, base à haute fréquence',
     level: 'Débutant / Tous niveaux',
@@ -80,6 +87,7 @@ export const PROTOCOLS = [
   },
   {
     id: 'no-hang-lift',
+    intensity: 4,
     name: 'No-hang / Lift',
     goal: 'Force max, charge précise et sûre',
     level: 'Tous niveaux',

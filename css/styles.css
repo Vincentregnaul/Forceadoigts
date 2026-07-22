@@ -31,6 +31,15 @@ body {
 .badge { font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; background: #232d38; color: var(--muted); }
 .badge.heavy { background: #3a2416; color: var(--prepare); }
 
+.intensity { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.int-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
+.gauge { display: inline-flex; gap: 3px; }
+.gauge i { width: 20px; height: 6px; border-radius: 3px; background: #2c3743; transition: background 0.2s; }
+.gauge.lvl-1 i.on, .gauge.lvl-2 i.on { background: var(--rest); }
+.gauge.lvl-3 i.on { background: var(--accent); }
+.gauge.lvl-4 i.on { background: var(--prepare); }
+.gauge.lvl-5 i.on { background: var(--danger); }
+
 .link-back { background: none; border: none; color: var(--rest); font-size: 1rem; text-align: left; }
 .meta, .safety, .hint { color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
 .safety { border-left: 3px solid var(--prepare); padding-left: 10px; }
