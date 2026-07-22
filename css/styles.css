@@ -15,6 +15,7 @@ body {
 .hidden { display: none !important; }
 
 .app-header { text-align: center; padding: 12px 0; }
+.app-logo { width: 72px; height: 72px; border-radius: 18px; display: block; margin: 0 auto 8px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
 .app-header h1 { font-size: 2rem; letter-spacing: 1px; }
 .tagline { color: var(--muted); }
 
