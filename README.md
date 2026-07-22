@@ -7,15 +7,13 @@ Density, No-hang, + échauffement).
 
 ## Lancer en local
 
-Un serveur statique suffit (le service worker exige `http://localhost` ou HTTPS) :
+Un serveur statique local est inclus (aucune dépendance ; le service worker exige `http://localhost` ou HTTPS) :
 
 ```bash
-# depuis la racine du projet
-npx serve
-# ou n'importe quel serveur statique sur le dossier
+npm start
 ```
 
-Puis ouvrir l'URL indiquée (par ex. http://localhost:3000).
+Puis ouvrir http://localhost:8000
 
 ## Tests
 
