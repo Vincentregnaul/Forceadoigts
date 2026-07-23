@@ -44,10 +44,10 @@ export const PROGRAMS = [
   },
   {
     id: 'abrahamsson-base',
-    featured: false,
-    badge: 'Pour débuter en douceur',
+    featured: true,
+    badge: '⭐ Efficace et sûr',
     name: 'No-hang Abrahamsson — base & tendons',
-    tagline: 'Basse intensité, haute fréquence : sûr et étonnamment efficace pour démarrer ou revenir de blessure.',
+    tagline: 'Basse intensité, haute fréquence : sûr et étonnamment efficace (une étude 2024 le situe au niveau des Max Hangs). Idéal pour démarrer ou revenir de blessure.',
     goal: 'Base, santé tendineuse',
     level: 'Débutant',
     intensity: 2,
@@ -94,7 +94,7 @@ export function buildProgramsHTML() {
   return `
   <div class="guide">
     <h2>Programmes</h2>
-    <p class="lead">Des plans structurés semaine par semaine. Choisis selon ton niveau, respecte les temps de repos, et progresse d’un cycle à l’autre. Les programmes ⭐ sont les plus efficaces selon la science et l’expérience des coachs.</p>
+    <p class="lead">Des plans structurés semaine par semaine. Ces 3 programmes ⭐ sont les plus efficaces selon la science, chacun pour son objectif : force maximale (López), force-endurance (Anderson) et base &amp; tendons (Abrahamsson). Choisis selon ton niveau, respecte les temps de repos, et progresse d’un cycle à l’autre.</p>
     ${cards}
     <p class="lead">Ces plans indiquent la trame ; adapte les charges à ta forme du jour. Échauffe-toi toujours, et arrête en cas de douleur articulaire.</p>
   </div>`;

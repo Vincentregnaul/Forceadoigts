@@ -1,5 +1,5 @@
 // sw.js — service worker : cache-first pour un fonctionnement 100 % hors-ligne.
-const CACHE = 'crimp-v6';
+const CACHE = 'crimp-v7';
 const ASSETS = [
   '.', 'index.html', 'manifest.webmanifest',
   'css/styles.css',
