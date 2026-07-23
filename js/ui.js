@@ -1,10 +1,11 @@
 // ui.js — rend et met à jour les écrans. Aucune logique de minuterie.
 import { formatTime, progressFraction } from './ui-helpers.js';
 import { buildGuideHTML } from './guide-content.js';
+import { buildProgramsHTML } from './programs-content.js';
 
 const RING = 565.48; // 2π·90, doit correspondre à --ring dans le CSS
 const $ = id => document.getElementById(id);
-const screens = ['home', 'config', 'session', 'summary', 'guide'];
+const screens = ['home', 'config', 'session', 'summary', 'guide', 'programs'];
 
 const PARAM_LABELS = {
   tension: 'Tension (s)', restIntra: 'Repos entre reps (s)',
@@ -33,6 +34,8 @@ export function createUI(handlers) {
   $('btn-home').addEventListener('click', () => handlers.onHome());
   $('btn-open-guide').addEventListener('click', () => handlers.onOpenGuide());
   $('btn-guide-back').addEventListener('click', () => handlers.onHome());
+  $('btn-open-programs').addEventListener('click', () => handlers.onOpenPrograms());
+  $('btn-programs-back').addEventListener('click', () => handlers.onHome());
 
   function showHome(protocols) {
     const list = $('protocol-list');
@@ -126,10 +129,15 @@ export function createUI(handlers) {
 
   function showGuide() {
     $('guide-content').innerHTML = buildGuideHTML();
-    document.getElementById('screen-guide').scrollTop = 0;
     window.scrollTo(0, 0);
     show('guide');
   }
 
-  return { showHome, showConfig, refreshParam, showSession, updatePhase, updateTick, setNext, showSummary, showGuide, getSettings };
+  function showPrograms() {
+    $('programs-content').innerHTML = buildProgramsHTML();
+    window.scrollTo(0, 0);
+    show('programs');
+  }
+
+  return { showHome, showConfig, refreshParam, showSession, updatePhase, updateTick, setNext, showSummary, showGuide, showPrograms, getSettings };
 }

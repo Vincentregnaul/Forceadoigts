@@ -33,7 +33,8 @@ const ui = createUI({
   onStop,
   onRestart,
   onHome,
-  onOpenGuide
+  onOpenGuide,
+  onOpenPrograms
 });
 
 function onSelectProtocol(id) {
@@ -135,6 +136,10 @@ function onHome() {
 
 function onOpenGuide() {
   ui.showGuide();
+}
+
+function onOpenPrograms() {
+  ui.showPrograms();
 }
 
 // Enregistrement du service worker (offline)
