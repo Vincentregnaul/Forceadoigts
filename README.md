@@ -32,9 +32,13 @@ node tools/make-icons.mjs
 
 ## Installer sur le téléphone
 
-Héberger le dossier sur un hébergeur statique HTTPS (GitHub Pages, Netlify,
-Vercel), ouvrir l'URL sur le téléphone, puis « Ajouter à l'écran d'accueil ».
+L'app est en ligne sur **GitHub Pages** : https://vincentregnaul.github.io/Forceadoigts/
+(publiée automatiquement à chaque push sur `main`, réglage Settings → Pages du dépôt).
+Ouvrir l'URL sur le téléphone, puis « Ajouter à l'écran d'accueil ».
 Une fois installée, l'app fonctionne entièrement hors-ligne.
+
+Icônes : `node tools/make-app-icons.mjs assets/logo-source.png icons --granite`
+(recolore le logo aux couleurs Granite, puis incrémenter `CACHE` dans `sw.js`).
 
 ## Utilisation
 

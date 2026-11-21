@@ -1,10 +1,13 @@
 // make-app-icons.mjs — décode un PNG source et écrit les icônes PWA (sans dépendance).
-// Usage : node make-app-icons.mjs <source.png> <dossier-icons>
+// Usage : node make-app-icons.mjs <source.png> <dossier-icons> [--granite]
+//   --granite : recolore la source aux couleurs Granite (voir granite-recolor.mjs).
 import { readFile, writeFile } from 'node:fs/promises';
 import { inflateSync, deflateSync } from 'node:zlib';
+import { recolorGranite, GRANITE } from './granite-recolor.mjs';
 
 const SRC = process.argv[2];
 const OUTDIR = process.argv[3];
+const USE_GRANITE = process.argv.includes('--granite');
 
 function decodePNG(buf) {
   let pos = 8, width = 0, height = 0, colorType = 0, bitDepth = 8, interlace = 0;
@@ -102,9 +105,10 @@ function encodePNG(img) {
   return Buffer.concat([sig, chunk('IHDR', ihdr), chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-const src = toRGBA(decodePNG(await readFile(SRC)));
+const decoded = toRGBA(decodePNG(await readFile(SRC)));
+const src = USE_GRANITE ? recolorGranite(decoded) : decoded;
 console.log('source décodée : ' + src.width + 'x' + src.height);
 await writeFile(`${OUTDIR}/icon-192.png`, encodePNG(resizeBox(src, 192, 192)));
 await writeFile(`${OUTDIR}/icon-512.png`, encodePNG(resizeBox(src, 512, 512)));
-await writeFile(`${OUTDIR}/icon-maskable-512.png`, encodePNG(maskable(src, 512, [14, 17, 22], 0.86)));
+await writeFile(`${OUTDIR}/icon-maskable-512.png`, encodePNG(maskable(src, 512, USE_GRANITE ? GRANITE : [14, 17, 22], 0.86)));
 console.log('Icones ecrites dans ' + OUTDIR);
