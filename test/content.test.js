@@ -38,3 +38,14 @@ test('le guide avertit les adolescents, avec ses sources', () => {
   assert.ok(guide.includes('pubmed.ncbi.nlm.nih.gov/39995613/'), 'Schöffl et al. 2025');
   assert.ok(guide.includes('pubmed.ncbi.nlm.nih.gov/33156031/'), 'Meyers et al. 2020');
 });
+
+test('aucun emoji dans l interface rendue', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { PROGRAMS } = await import('../js/programs-content.js');
+  const html = readFileSync('index.html', 'utf8').replace(/<!--[\s\S]*?-->/g, '');
+  const emoji = /\p{Extended_Pictographic}/u;
+  for (const [nom, s] of [['guide', guide], ['programmes', programs], ['index.html', html]]) {
+    assert.doesNotMatch(s, emoji, `emoji dans ${nom}`);
+  }
+  for (const p of PROGRAMS) assert.doesNotMatch(p.badge, emoji, `emoji dans le badge ${p.id}`);
+});

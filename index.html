@@ -22,8 +22,8 @@
         <p class="tagline">Coach de force à doigt</p>
       </header>
       <div id="protocol-list" class="cards"></div>
-      <button id="btn-open-programs" class="btn-secondary">🗓️ Programmes semaine par semaine</button>
-      <button id="btn-open-guide" class="btn-secondary">📖 Guide &amp; méthodologie</button>
+      <button id="btn-open-programs" class="btn-secondary" data-icon="calendar">Programmes semaine par semaine</button>
+      <button id="btn-open-guide" class="btn-secondary" data-icon="book">Guide &amp; méthodologie</button>
       <details class="settings">
         <summary>Guidage sonore</summary>
         <label><input type="checkbox" id="set-voice" checked /> Voix</label>
@@ -34,10 +34,10 @@
 
     <!-- Écran 2 : Réglage avant séance -->
     <section id="screen-config" class="screen hidden">
-      <button id="btn-config-back" class="link-back">‹ Retour</button>
+      <button id="btn-config-back" class="link-back" data-icon="back">Retour</button>
       <h2 id="config-title"></h2>
       <p id="config-meta" class="meta"></p>
-      <p id="warmup-hint" class="hint hidden">⚠️ Protocole lourd — pense à lancer l'échauffement d'abord.</p>
+      <p id="warmup-hint" class="hint hidden" data-icon="alert">Protocole lourd — pense à lancer l'échauffement d'abord.</p>
       <p id="youth-hint" class="hint hidden">Moins de 18 ans : prudence, les cartilages de croissance des doigts sont fragiles. Une douleur sur le dos d'une articulation du doigt doit faire consulter.</p>
       <div id="config-params" class="params"></div>
       <p id="config-safety" class="safety"></p>
@@ -68,7 +68,7 @@
 
     <!-- Écran 4 : Résumé -->
     <section id="screen-summary" class="screen hidden">
-      <h2>Séance terminée 💪</h2>
+      <h2 data-icon="check">Séance terminée</h2>
       <p id="summary-text" class="summary"></p>
       <div id="summary-extra" class="guide"></div>
       <button id="btn-restart" class="btn-primary">Refaire</button>
@@ -77,13 +77,13 @@
 
     <!-- Écran 5 : Guide & méthodologie -->
     <section id="screen-guide" class="screen hidden">
-      <button id="btn-guide-back" class="link-back">‹ Retour</button>
+      <button id="btn-guide-back" class="link-back" data-icon="back">Retour</button>
       <div id="guide-content"></div>
     </section>
 
     <!-- Écran 6 : Programmes -->
     <section id="screen-programs" class="screen hidden">
-      <button id="btn-programs-back" class="link-back">‹ Retour</button>
+      <button id="btn-programs-back" class="link-back" data-icon="back">Retour</button>
       <div id="programs-content"></div>
     </section>
 

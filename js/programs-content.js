@@ -1,13 +1,15 @@
 // programs-content.js — programmes d'entraînement semaine par semaine.
-// Les programmes "featured" (⭐) sont les références les mieux étayées, chacun pour son objectif.
+// Les programmes "featured" (étoile) sont les références les mieux étayées, chacun pour son objectif.
 // Sources : blog E. López (étude 2016 et FAQ 2012) ; López-Rivera & González-Badillo 2019 (PMID 30988852) ;
 // Rock Climber's Training Manual (Anderson, via E. Hörst 2016) ; Gilmore et al. 2024 (PMID 39560837) ; Baar 2017.
+
+import { icon } from './icons.js';
 
 export const PROGRAMS = [
   {
     id: 'lopez-maxhangs',
     featured: true,
-    badge: '⭐ Référence force max',
+    badge: 'Référence force max',
     name: 'Max Hangs — Eva López (MAW → MED)',
     tagline: 'Un des protocoles les plus efficaces pour la force maximale : +28 % en 8 semaines dans une étude d’Eva López présentée en 2016 (26 grimpeurs de haut niveau ; écart non significatif avec les autres groupes).',
     goal: 'Force maximale',
@@ -26,7 +28,7 @@ export const PROGRAMS = [
   {
     id: 'anderson-repeaters',
     featured: true,
-    badge: '⭐ Référence éprouvée',
+    badge: 'Référence éprouvée',
     name: 'Repeaters — Anderson (Rock Climber’s Training Manual)',
     tagline: 'Le grand classique périodisé (Rock Prodigy). Excellent pour la force-endurance et l’hypertrophie.',
     goal: 'Force-endurance / hypertrophie',
@@ -46,7 +48,7 @@ export const PROGRAMS = [
   {
     id: 'abrahamsson-base',
     featured: true,
-    badge: '⭐ Doux et régulier',
+    badge: 'Doux et régulier',
     name: 'No-hang Abrahamsson — base & tendons',
     tagline: 'Basse intensité, haute fréquence, peu de fatigue. Une analyse de 2024 sur des données d’app suggère un gain proche des Max Hangs, sans preuve solide : étude rétrospective, charge non mesurée.',
     goal: 'Base, régularité',
@@ -72,7 +74,7 @@ export function buildProgramsHTML() {
   const ordered = [...PROGRAMS].sort((a, b) => (b.featured === true) - (a.featured === true));
   const cards = ordered.map(p => `
     <div class="program${p.featured ? ' featured' : ''}">
-      <span class="program-badge${p.featured ? ' star' : ''}">${p.badge}</span>
+      <span class="program-badge${p.featured ? ' star' : ''}">${p.featured ? icon('star') : ''}${p.badge}</span>
       <h3>${p.name} ${gauge(p.intensity)}</h3>
       <p class="lead">${p.tagline}</p>
       <div class="prog-tags">
@@ -87,7 +89,7 @@ export function buildProgramsHTML() {
           <ul class="weeks">
             ${p.weeks.map(w => `<li><strong>Sem. ${w.w} — ${w.focus}</strong><br>${w.detail}</li>`).join('')}
           </ul>
-          <p class="lead">💡 ${p.note}</p>
+          <p class="lead note">${icon('bulb')}${p.note}</p>
         </div>
       </details>
     </div>`).join('');
@@ -95,7 +97,7 @@ export function buildProgramsHTML() {
   return `
   <div class="guide">
     <h2>Programmes</h2>
-    <p class="lead">Des plans structurés semaine par semaine. Ces 3 programmes ⭐ sont des références, chacun pour son objectif : force maximale (López), force-endurance (Anderson) et base à basse intensité (Abrahamsson). Choisis selon ton niveau, respecte les temps de repos, et progresse d’un cycle à l’autre.</p>
+    <p class="lead">Des plans structurés semaine par semaine. Ces 3 programmes vedettes sont des références, chacun pour son objectif : force maximale (López), force-endurance (Anderson) et base à basse intensité (Abrahamsson). Choisis selon ton niveau, respecte les temps de repos, et progresse d’un cycle à l’autre.</p>
     ${cards}
     <p class="lead">Ces plans indiquent la trame ; adapte les charges à ta forme du jour. Échauffe-toi toujours, et arrête en cas de douleur articulaire.</p>
   </div>`;

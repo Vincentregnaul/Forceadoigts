@@ -4,6 +4,7 @@
 // ce qui relève d'un avis de coach est dit comme tel.
 import { PROTOCOLS } from './protocols.js';
 import { buildLoadCalcHTML } from './load-calc.js';
+import { icon } from './icons.js';
 
 const pm = id => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 
@@ -87,7 +88,7 @@ export function buildGuideHTML() {
           <p><strong>Comment —</strong> ${e.how}</p>
           <p><strong>Pour qui —</strong> ${e.who}</p>
           <p><strong>Progresser —</strong> ${e.progress}</p>
-          <p class="lead">⚠️ ${p.safety}</p>
+          <p class="lead">${icon('alert')}${p.safety}</p>
         </div>
       </details>`;
   }).join('');

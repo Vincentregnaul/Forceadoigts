@@ -2,6 +2,7 @@
 import { formatTime, progressFraction } from './ui-helpers.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
+import { icon } from './icons.js';
 import { workingLoads, describeLoads, buildLoadCalcHTML } from './load-calc.js';
 
 const RING = 565.48; // 2π·90, doit correspondre à --ring dans le CSS
@@ -44,6 +45,9 @@ function bindLoadCalc(prefix) {
 }
 
 export function createUI(handlers) {
+  // Icônes SVG des éléments statiques (data-icon="nom")
+  for (const el of document.querySelectorAll('[data-icon]')) el.insertAdjacentHTML('afterbegin', icon(el.dataset.icon));
+
   // Réglages guidage
   const getSettings = () => ({
     voice: $('set-voice').checked,
