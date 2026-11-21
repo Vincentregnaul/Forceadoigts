@@ -49,7 +49,7 @@
 
 ---
 
-### Tâche 1 : Fondations — polices, tokens, garde-fous hors-ligne
+### Task 1: Fondations — polices, tokens, garde-fous hors-ligne
 
 **Fichiers :**
 - Créer :
@@ -133,7 +133,7 @@
 
 ---
 
-### Tâche 2 : Icônes SVG à la place des emoji
+### Task 2: Icônes SVG à la place des emoji
 
 **Fichiers :**
 - Créer : `js/icons.js` et `test/icons.test.js`.
@@ -196,7 +196,7 @@
 
 ---
 
-### Tâche 3 : Accueil — titre, poussière de magnésie, cartes
+### Task 3: Accueil — titre, poussière de magnésie, cartes
 
 **Fichiers :**
 - Créer : `js/motion.js`.
@@ -282,7 +282,7 @@
 
 ---
 
-### Tâche 4 : Écran de réglage
+### Task 4: Écran de réglage
 
 **Fichiers :** modifier `index.html` (`#screen-config`), `js/ui.js` (`showConfig`), `css/styles.css` et `sw.js`.
 
@@ -316,7 +316,7 @@
 
 ---
 
-### Tâche 5 : Écran de séance
+### Task 5: Écran de séance
 
 **Fichiers :** modifier `index.html` (`#screen-session`), `js/ui-helpers.js`, `js/ui.js` (`updatePhase`, `updateTick`, et le redimensionnement), `css/styles.css`, `sw.js` et `test/ui-helpers.test.js`.
 
@@ -383,7 +383,7 @@
 
 ---
 
-### Tâche 6 : Résumé avec compteurs
+### Task 6: Résumé avec compteurs
 
 **Fichiers :** modifier `js/ui-helpers.js`, `js/ui.js` (`showSummary`), `js/motion.js` (`countUp`), `js/app.js` (`onFinished`), `index.html` (`#screen-summary`), `css/styles.css`, `sw.js` et `test/ui-helpers.test.js`.
 
@@ -421,7 +421,7 @@
 
 ---
 
-### Tâche 7 : Guide et programmes, en-tête collant
+### Task 7: Guide et programmes, en-tête collant
 
 **Fichiers :** modifier `index.html` (`#screen-guide`, `#screen-programs`), `css/styles.css` et `sw.js`.
 
@@ -457,7 +457,7 @@
 
 ---
 
-### Tâche 8 : Vérification complète dans le navigateur
+### Task 8: Vérification complète dans le navigateur
 
 Aucun nouveau fichier. Une correction trouvée ici fait l'objet d'un commit `fix(design) : …`, avec un incrément du cache.
 
