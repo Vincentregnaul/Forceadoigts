@@ -131,7 +131,9 @@ export function createUI(handlers) {
 
   function showConfig(protocol, workingParams) {
     const lvl = protocol.intensity || 1;
-    $('screen-config').className = `screen tone-${intensityTone(lvl)}`;
+    const cfg = $('screen-config');
+    cfg.classList.remove('tone-rest', 'tone-prepare', 'tone-tension');
+    cfg.classList.add(`tone-${intensityTone(lvl)}`);
     $('config-title').textContent = protocol.name;
     $('config-meta').textContent = `${protocol.goal} · ${protocol.grip}`;
     $('config-spec').textContent = specLine(protocol);
