@@ -50,3 +50,11 @@ export function chronoShape(text) {
 export function fitFontSize(widthAt100, availW, availH, hCap = 0.38) {
   return Math.floor(Math.min(availW * 100 / widthAt100, availH * hCap));
 }
+
+// Compteur du résumé : valeur affichée après elapsedMs (accélération puis ralenti).
+// durationMs <= 0 (mouvement réduit) : directement la valeur finale.
+export function countUpAt(target, elapsedMs, durationMs = 800) {
+  if (durationMs <= 0) return target;
+  const p = Math.min(1, Math.max(0, elapsedMs / durationMs));
+  return Math.round(target * (1 - (1 - p) ** 3));
+}

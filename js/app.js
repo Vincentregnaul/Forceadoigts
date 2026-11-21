@@ -124,9 +124,7 @@ async function onFinished(summary) {
   stopDriver();
   await wakeLock.release();
   setPauseLabel('Pause');
-  const parts = [`Durée ${formatTime(summary.totalDuration)}`, `${summary.tensions} suspensions`];
-  if (summary.sets > 1) parts.push(`${summary.sets} séries`);
-  ui.showSummary(parts.join(' · '), { calc: Boolean(currentProtocol && currentProtocol.calc) });
+  ui.showSummary(summary, { calc: Boolean(currentProtocol && currentProtocol.calc) });
 }
 
 function onRestart() { onStart(); }

@@ -1,6 +1,6 @@
 // ui.js — rend et met à jour les écrans. Aucune logique de minuterie.
 import { formatTime, progressFraction, intensityTone, specLine, chronoShape, fitFontSize } from './ui-helpers.js';
-import { initDust } from './motion.js';
+import { initDust, countUp } from './motion.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
 import { icon } from './icons.js';
@@ -199,8 +199,13 @@ export function createUI(handlers) {
 
   function setNext(text) { $('session-next').textContent = text ? `Ensuite : ${text}` : ''; }
 
-  function showSummary(text, { calc = false } = {}) {
-    $('summary-text').textContent = text;
+  // summary : { totalDuration, tensions, sets } fourni par le moteur.
+  function showSummary(summary, { calc = false } = {}) {
+    const stats = [['Durée', summary.totalDuration, formatTime], ['Suspensions', summary.tensions, String]];
+    if (summary.sets > 1) stats.push(['Séries', summary.sets, String]);
+    const box = $('summary-text');
+    box.innerHTML = stats.map(([label]) => `<div class="stat"><dt>${label}</dt><dd class="num"></dd></div>`).join('');
+    box.querySelectorAll('dd').forEach((dd, i) => countUp(dd, stats[i][1], stats[i][2]));
     const extra = $('summary-extra');
     extra.innerHTML = calc ? `<h3>Tes charges de travail</h3>${buildLoadCalcHTML('summary')}` : '';
     if (calc) bindLoadCalc('summary');

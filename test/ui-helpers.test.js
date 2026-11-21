@@ -72,3 +72,13 @@ test('le chrono ne déborde jamais', () => {
     }
   }
 });
+
+import { countUpAt } from '../js/ui-helpers.js';
+
+test('countUpAt : monte vers la cible, valeur finale sans animation', () => {
+  assert.equal(countUpAt(100, 0), 0);
+  assert.equal(countUpAt(100, 400), 88); // 1 − 0,5³ = 0,875
+  assert.equal(countUpAt(100, 800), 100);
+  assert.equal(countUpAt(100, 5000), 100);
+  assert.equal(countUpAt(42, 123, 0), 42); // mouvement réduit : durée 0
+});
