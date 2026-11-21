@@ -2,6 +2,7 @@
 // Structuré : params {prepare,tension,restIntra,reps,sets,restInter}.
 // Steps : échauffement à intensité progressive.
 // intensity : 1 (très léger) à 5 (maximal) — sert à la jauge visuelle.
+// calc (optionnel) : affiche le calcul des charges de travail en fin de séance.
 // Sources de chaque paramètre : voir js/guide-content.js (section Sources).
 
 const ARMS = 'Bras tendus, épaules engagées.';
@@ -30,6 +31,19 @@ export const PROTOCOLS = [
       { kind: 'rest', label: 'Repos', duration: 90 },
       { kind: 'prepare', label: 'Prêt à charger', duration: 5, voice: 'Prêt pour la séance' }
     ]
+  },
+  {
+    id: 'test-max',
+    intensity: 5,
+    name: 'Test de force max',
+    goal: 'Mesurer ta force, calculer tes charges',
+    level: 'Intermédiaire et +',
+    grip: 'Half-crimp, réglette 20 mm, deux mains',
+    heavy: true,
+    calc: true,
+    safety: `Après l’échauffement complet. Ajoute du lest par paliers de 5 kg au plus et garde le dernier essai tenu 7 s. Arrête au premier échec ou à la moindre douleur. ${ARMS}`,
+    adjustable: ['tension', 'restIntra', 'reps'],
+    params: { prepare: 5, tension: 7, restIntra: 120, reps: 8, sets: 1, restInter: 120 }
   },
   {
     id: 'max-hangs-mad',

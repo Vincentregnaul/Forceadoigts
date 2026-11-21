@@ -2,8 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { PROTOCOLS, getProtocol } from '../js/protocols.js';
 
-test('il y a un échauffement + 6 protocoles de force', () => {
-  assert.equal(PROTOCOLS.length, 7);
+test('il y a un échauffement + 7 protocoles de force', () => {
+  assert.equal(PROTOCOLS.length, 8);
   assert.ok(PROTOCOLS.some(p => p.id === 'warmup'));
 });
 
@@ -65,6 +65,17 @@ test('Abrahamsson suit la version évaluée en 2024 (10 s / 20 s × 20)', () => 
 
 test('MED garde la marge de 3 s (réglette tenable ~13 s)', () => {
   assert.match(getProtocol('min-edge-med').grip, /13 s/);
+});
+
+test('le test de force max : 7 s, 2 min de repos, jusqu à 8 essais, avec calcul de charge', () => {
+  const t = getProtocol('test-max');
+  assert.ok(t, 'le protocole test-max doit exister');
+  assert.equal(t.params.tension, 7);
+  assert.equal(t.params.restIntra, 120);
+  assert.equal(t.params.reps, 8);
+  assert.equal(t.params.sets, 1);
+  assert.equal(t.calc, true);
+  assert.equal(t.heavy, true);
 });
 
 test('l échauffement monte jusqu à ~85 % et commence par un échauffement général', () => {

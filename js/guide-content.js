@@ -3,6 +3,7 @@
 // Niveau de preuve : les études sur la poutre restent petites (11 à 54 grimpeurs, 4 à 10 semaines) ;
 // ce qui relève d'un avis de coach est dit comme tel.
 import { PROTOCOLS } from './protocols.js';
+import { buildLoadCalcHTML } from './load-calc.js';
 
 const pm = id => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 
@@ -14,9 +15,15 @@ const EXPLAIN = {
     who: 'Tout le monde, avant chaque séance de force.',
     progress: 'Adapte la durée à ta température : plus il fait froid, plus tu montes doucement.'
   },
+  'test-max': {
+    what: 'Mesurer ta force maximale pour doser tes séances en % plutôt qu’à l’estime, et suivre tes progrès. Les tests sur une réglette fixe de 20 à 23 mm sont les plus fiables (revue systématique de 2025).',
+    how: 'Après l’échauffement : suspensions de 7 s à deux mains sur 20 mm en half-crimp, en ajoutant du lest par paliers de 5 kg au plus, 2 min de repos. Jusqu’à 8 essais ; garde le dernier essai tenu 7 s, puis entre ton poids et ce lest dans le calcul (fin de séance ou plus bas dans ce guide).',
+    who: 'Grimpeurs qui s’entraînent déjà à la poutre. Avec une poulie, le lest peut être négatif (assistance).',
+    progress: 'Refais le test en fin de cycle, sur la même réglette et dans les mêmes conditions, pour comparer.'
+  },
   'max-hangs-mad': {
     what: 'Force maximale par l’intensité : des suspensions courtes et très lourdes. Dans une étude d’Eva López présentée en 2016 (26 grimpeurs de haut niveau), le programme Max Hangs puis Min Edge a gagné +28 % de force en 8 semaines, contre +13,9 % pour des suspensions intermittentes ; l’écart entre groupes n’était pas significatif.',
-    how: '5 suspensions de 10 s à une charge que tu pourrais tenir ~13 s (3 s de marge), 3 min de repos, réglette 18-20 mm en half-crimp. 2 séances par semaine. Eva López commence à 3 suspensions et monte à 5 en trois semaines.',
+    how: '5 suspensions de 10 s à une charge que tu pourrais tenir ~13 s (3 s de marge), 3 min de repos, réglette 18-20 mm en half-crimp. 2 séances par semaine. Eva López commence à 3 suspensions et monte à 5 en trois semaines. Avec un test de force max, vise 85 à 95 % de ta charge de test.',
     who: 'Grimpeurs confirmés. Repères d’Eva López : environ 2 ans de pratique régulière, et tenir ~40 s sur 20 mm et ~15 s sur 10 mm au poids du corps.',
     progress: 'Ajoute 1 à 3 % de charge quand les 10 s deviennent confortables. Après 4 semaines, passe sur Min Edge (MED).'
   },
@@ -122,6 +129,10 @@ export function buildGuideHTML() {
     </table>
     <p class="lead">Ces seuils en années sont un repère de coach, pas un résultat d'étude. Repères d'Eva López avant les Max Hangs lestés : environ 2 ans de pratique régulière, et tenir ~40 s sur 20 mm et ~15 s sur 10 mm au poids du corps. En dessous, reste sur basse intensité et escalade.</p>
 
+    <h3>Tester ta force</h3>
+    <p>Le <strong>test de force max</strong> (dans la liste des protocoles) mesure la charge totale que tu tiens 7 s à deux mains sur 20 mm. Entre ton poids et le lest de ton meilleur essai : le calcul donne ton ratio force/poids et le lest à utiliser pour des Max Hangs de 10 s à 85, 90 et 95 %, les intensités utilisées dans l'étude de 2024. Compare-toi surtout à toi-même : il n'existe pas de barème publié fiable par niveau.</p>
+    ${buildLoadCalcHTML('guide')}
+
     <h3>Les protocoles en détail</h3>
     ${protocolsDetail}
 
@@ -129,7 +140,7 @@ export function buildGuideHTML() {
     <ul>
       <li><strong>Temps sous tension</strong> : 10 s ou moins = force ; 20-40 s = endurance / hypertrophie.</li>
       <li><strong>Repos</strong> : 3 min entre efforts lourds ; 3 s intra-série pour les repeaters ; 48-72 h entre séances.</li>
-      <li><strong>Intensité</strong> : proche du max pour la force, en gardant 1 à 3 s de marge avant l'échec.</li>
+      <li><strong>Intensité</strong> : 85 à 95 % de ton test pour la force, en gardant 1 à 3 s de marge avant l'échec.</li>
       <li><strong>Fréquence</strong> : 2×/semaine, c'est la fréquence de toutes les études qui ont mesuré des progrès.</li>
       <li><strong>Prise</strong> : half-crimp = standard d'entraînement ; open hand = moins de charge sur les poulies ; full crimp chargé = à éviter.</li>
       <li><strong>Position</strong> : en suspension, bras tendus et épaules engagées. C'est la position qui charge le moins coudes et épaules, pour le même travail des doigts (analyse biomécanique de 2023).</li>
@@ -156,6 +167,7 @@ export function buildGuideHTML() {
         <li>${link(pm(39560837), 'Gilmore et al. (2024), Sports Medicine – Open')} — Abrahangs, Max Hangs et leur combinaison.</li>
         <li>${link(pm(39450143), 'Saeterbakken et al. (2024), Frontiers in Physiology')} — tirages au bloc et performance en bloc.</li>
         <li>${link('https://revista-apunts.com/en/comparative-analysis-of-two-grip-strength-training-protocols-in-experienced-climbers/', 'Ruiz-López et al. (2025), Apunts')} — traction sur capteur contre suspension lestée.</li>
+        <li>${link(pm(41103490), 'Pérez-Cordero et al. (2025), Frontiers in Sports and Active Living')} — fiabilité des tests de force.</li>
         <li>${link(pm(16225880), 'Vigouroux et al. (2006), J. Biomechanics')} et ${link(pm(11165286), 'Schweizer (2001)')} — charge des poulies selon la prise.</li>
         <li>${link(pm(38162697), 'Quarmby et al. (2023), revue systématique')} — facteurs de risque des blessures de surmenage.</li>
         <li>${link(pm(37927449), 'Exel et al. (2023)')} — position des bras pendant la suspension.</li>

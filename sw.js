@@ -4,7 +4,7 @@ const ASSETS = [
   '.', 'index.html', 'manifest.webmanifest',
   'css/styles.css',
   'js/app.js', 'js/protocols.js', 'js/timer-engine.js', 'js/cues.js',
-  'js/adapters.js', 'js/wake-lock.js', 'js/ui.js', 'js/ui-helpers.js', 'js/guide-content.js', 'js/programs-content.js',
+  'js/adapters.js', 'js/wake-lock.js', 'js/ui.js', 'js/ui-helpers.js', 'js/guide-content.js', 'js/programs-content.js', 'js/load-calc.js',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'
 ];
 

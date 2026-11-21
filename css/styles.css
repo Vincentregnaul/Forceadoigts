@@ -128,3 +128,11 @@ body {
 .weeks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; margin: 8px 0; }
 .weeks li { border-left: 3px solid #2c3743; padding-left: 12px; font-size: 0.9rem; line-height: 1.5; }
 .weeks li strong { color: var(--accent); }
+
+/* Calcul des charges de travail (test de force max) */
+.calc { background: var(--card); border: 1px solid #232d38; border-radius: 12px; padding: 12px 14px; margin: 10px 0; display: flex; flex-direction: column; gap: 10px; }
+.calc-inputs { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.calc label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: var(--muted); flex: 1 1 140px; min-width: 0; }
+.calc input { font: inherit; font-size: 1.1rem; color: inherit; background: #0b0e12; border: 1px solid #2c3743; border-radius: 8px; padding: 8px 10px; width: 100%; }
+.calc input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.calc-out { display: block; line-height: 1.5; font-size: 0.95rem; }

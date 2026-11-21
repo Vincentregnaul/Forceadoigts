@@ -2,6 +2,7 @@
 import { formatTime, progressFraction } from './ui-helpers.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
+import { workingLoads, describeLoads, buildLoadCalcHTML } from './load-calc.js';
 
 const RING = 565.48; // 2π·90, doit correspondre à --ring dans le CSS
 const $ = id => document.getElementById(id);
@@ -14,6 +15,32 @@ const PARAM_LABELS = {
 
 function show(name) {
   for (const s of screens) $(`screen-${s}`).classList.toggle('hidden', s !== name);
+}
+
+// Calcul des charges : mémorise le poids et le lest dans ce navigateur (confort seulement).
+const CALC_KEY = 'crimp-calc';
+function readCalc() {
+  try { return JSON.parse(localStorage.getItem(CALC_KEY)) || {}; } catch { return {}; }
+}
+function writeCalc(v) {
+  try { localStorage.setItem(CALC_KEY, JSON.stringify(v)); } catch { /* stockage indisponible */ }
+}
+function bindLoadCalc(prefix) {
+  const body = $(`${prefix}-body`), added = $(`${prefix}-added`), out = $(`${prefix}-out`);
+  if (!body || !added || !out) return;
+  const saved = readCalc();
+  if (saved.body != null) body.value = saved.body;
+  if (saved.added != null) added.value = saved.added;
+  const update = () => {
+    const b = parseFloat(body.value.replace(',', '.'));
+    const a = parseFloat(added.value.replace(',', '.'));
+    out.textContent = describeLoads(workingLoads(b, a));
+    writeCalc({ body: body.value, added: added.value });
+  };
+  body.addEventListener('input', update);
+  added.addEventListener('input', update);
+  $(`${prefix}-calc`).addEventListener('submit', e => e.preventDefault());
+  update();
 }
 
 export function createUI(handlers) {
@@ -122,13 +149,17 @@ export function createUI(handlers) {
 
   function setNext(text) { $('session-next').textContent = text ? `Ensuite : ${text}` : ''; }
 
-  function showSummary(text) {
+  function showSummary(text, { calc = false } = {}) {
     $('summary-text').textContent = text;
+    const extra = $('summary-extra');
+    extra.innerHTML = calc ? `<h3>Tes charges de travail</h3>${buildLoadCalcHTML('summary')}` : '';
+    if (calc) bindLoadCalc('summary');
     show('summary');
   }
 
   function showGuide() {
     $('guide-content').innerHTML = buildGuideHTML();
+    bindLoadCalc('guide');
     window.scrollTo(0, 0);
     show('guide');
   }

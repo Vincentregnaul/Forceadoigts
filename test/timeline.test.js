@@ -73,6 +73,13 @@ test('Abrahamsson : 20 suspensions de 10 s, 19 repos de 20 s', () => {
   assert.equal(totalDuration(t), 5 + 20 * 10 + 19 * 20);
 });
 
+test('test de force max : 8 essais de 7 s séparés de 2 min', () => {
+  const t = buildTimeline(getProtocol('test-max'));
+  assert.equal(t.filter(p => p.kind === 'tension').length, 8);
+  assert.ok(t.filter(p => p.kind === 'restIntra').every(p => p.duration === 120));
+  assert.equal(totalDuration(t), 5 + 8 * 7 + 7 * 120);
+});
+
 test('échauffement : durée totale entre 10 et 16 min', () => {
   const total = totalDuration(buildTimeline(getProtocol('warmup')));
   assert.ok(total >= 600 && total <= 960, `durée ${total} s`);

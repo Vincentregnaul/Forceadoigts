@@ -28,6 +28,7 @@ test('les +28 % ne sont plus attribués à l étude de 2019', () => {
   }
 });
 
-test('le guide garde l avertissement de santé', () => {
+test('le guide contient le calcul des charges et l avertissement de santé', () => {
+  assert.ok(guide.includes('id="guide-body"'));
   assert.match(guide, /ne remplace pas un coach ni un professionnel de santé/);
 });

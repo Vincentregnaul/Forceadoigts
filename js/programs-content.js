@@ -21,7 +21,7 @@ export const PROGRAMS = [
       { w: '5-6', focus: 'MED · réglette réduite', detail: '2 séances/sem. 5 × 10 s sur la plus petite réglette que tu tiendrais ~13 s (elle dépend de ton niveau : de 8 à 22 mm chez les grimpeurs de l’étude d’E. López), poids de corps, 3 min de repos.' },
       { w: '7-8', focus: 'MED · progression', detail: '2 séances/sem. Réduis la réglette de 1-2 mm dès que la profondeur devient facile.' }
     ],
-    note: 'Toujours précédé de l’échauffement guidé. 48-72 h entre deux séances. L’ordre MAW puis MED a donné de meilleurs résultats que l’inverse dans une petite étude (López, 2012).'
+    note: 'Toujours précédé de l’échauffement guidé. 48-72 h entre deux séances. L’ordre MAW puis MED a donné de meilleurs résultats que l’inverse dans une petite étude (López, 2012). Fais le test de force max avant et après le cycle.'
   },
   {
     id: 'anderson-repeaters',
