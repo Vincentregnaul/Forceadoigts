@@ -3,7 +3,6 @@
   --granite: #111315; --slab: #1b1e21; --seam: #2a2e33;
   --chalk: #eeeae2; --dust: #9aa0a7;
   --tension: #ff5a36; --rest: #6ec1e4; --prepare: #f2b53a;
-  --ring: 565.48; /* 2πr, r=90 — anneau remplacé par une barre à la tâche 5 */
   --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --font-num: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
   --font-text: Barlow, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -117,29 +116,33 @@ body {
 .btn-primary { background: var(--chalk); color: var(--granite); min-height: 56px; font-size: 1.15rem; }
 .btn-secondary { background: var(--slab); color: var(--chalk); border-color: var(--seam); }
 
-/* Séance */
-.session { align-items: center; text-align: center; padding-top: 8px; }
-.ring { width: min(78vw, 320px); height: min(78vw, 320px); display: block; margin: 0 auto; }
-.ring-bg { fill: none; stroke: var(--seam); stroke-width: 12; }
-.ring-fg { fill: none; stroke: var(--chalk); stroke-width: 12; stroke-linecap: round;
-  stroke-dasharray: var(--ring); stroke-dashoffset: var(--ring); transition: stroke-dashoffset 0.1s linear; }
-.ring-center { margin-top: calc(min(78vw, 320px) * -0.62); position: relative; }
-.count { font-size: 4rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.phase-label { font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
-.sub { margin-top: calc(min(78vw, 320px) * 0.28); color: var(--dust); font-size: 1rem; }
-.next { color: var(--dust); font-size: 0.85rem; min-height: 1.2em; }
-.controls { display: flex; gap: 10px; width: 100%; margin-top: 16px; }
-.btn-ctrl { flex: 1; padding: 16px 0; border-radius: 12px; border: 1px solid var(--seam);
-  background: var(--slab); color: var(--chalk); font-size: 1rem; }
+/* Séance — lisible à 2 m : teinte de phase, mot de phase, chrono géant, barre.
+   Rien n'anime hors de la barre et du chrono ; la teinte change sans transition. */
+#screen-session { position: fixed; inset: 0; z-index: 10; overflow-y: auto; background: var(--granite); }
+.session {
+  --phase: var(--prepare);
+  min-height: 100%; display: flex; flex-direction: column; align-items: stretch; gap: 14px; text-align: center;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: var(--granite);
+  background: color-mix(in srgb, var(--phase) 16%, var(--granite));
+}
+.phase-tension { --phase: var(--tension); }
+.phase-rest { --phase: var(--rest); }
+.phase-prepare { --phase: var(--prepare); }
+.phase-label { color: var(--phase); font-size: clamp(2.6rem, 13vw, 5.5rem); line-height: 0.95; letter-spacing: 0.03em; }
+.chrono-box { flex: 1 0 auto; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.count { color: var(--chalk); font-size: 30vh; line-height: 0.9; white-space: nowrap; }
+.chrono-meter { position: absolute; left: -9999px; top: 0; visibility: hidden; font-size: 100px; }
+.bar { position: relative; height: 14px; border-radius: 7px; background: var(--seam); overflow: hidden; }
+.bar-fill { position: absolute; inset: 0; background: var(--phase); transform: scaleX(0); transform-origin: left center; transition: transform 0.1s linear; }
+.sub { color: var(--chalk); font-weight: 500; font-size: clamp(1.05rem, 4.6vw, 1.5rem); line-height: 1.3; overflow-wrap: anywhere; }
+.next { color: var(--dust); font-size: 1rem; min-height: 1.3em; overflow-wrap: anywhere; }
+.controls { display: flex; gap: 10px; width: 100%; max-width: 640px; margin: auto auto 0; }
+.btn-ctrl {
+  flex: 1; min-height: 56px; padding: 14px 0; border-radius: 12px; border: 1px solid var(--seam);
+  background: var(--granite); color: var(--chalk); font: inherit; font-size: 1.05rem; font-weight: 600; cursor: pointer;
+}
 .btn-ctrl.danger { color: var(--tension); }
-
-/* Couleurs de phase (portées par #session-screen-inner) */
-.phase-tension .ring-fg { stroke: var(--tension); }
-.phase-tension .phase-label { color: var(--tension); }
-.phase-rest .ring-fg { stroke: var(--rest); }
-.phase-rest .phase-label { color: var(--rest); }
-.phase-prepare .ring-fg { stroke: var(--prepare); }
-.phase-prepare .phase-label { color: var(--prepare); }
 
 .settings { background: var(--slab); border: 1px solid var(--seam); border-radius: 12px; padding: 12px 16px; }
 .settings summary { cursor: pointer; color: var(--dust); }
@@ -197,5 +200,6 @@ body {
 /* Mouvement réduit : aucun effet ne joue. */
 @media (prefers-reduced-motion: reduce) {
   .brand span, .dust i { animation: none; }
+  .bar-fill { transition: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

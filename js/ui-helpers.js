@@ -38,3 +38,15 @@ export function specLine(protocol) {
   if (sets > 1) parts.push(`${sets} séries`);
   return parts.join(' · ');
 }
+
+// Forme du chrono : chaque chiffre devient 0 (« 8:59 » → « 0:00 »). La taille du
+// chrono ne se recalcule que lorsque cette forme change, jamais à chaque seconde.
+export function chronoShape(text) {
+  return text.replace(/\d/g, '0');
+}
+
+// Plus grande taille de police (px) qui tient en largeur et ne dépasse pas hCap
+// de la hauteur d'écran. widthAt100 : largeur du texte rendu à 100 px.
+export function fitFontSize(widthAt100, availW, availH, hCap = 0.38) {
+  return Math.floor(Math.min(availW * 100 / widthAt100, availH * hCap));
+}

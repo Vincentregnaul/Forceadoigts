@@ -1,12 +1,11 @@
 // ui.js — rend et met à jour les écrans. Aucune logique de minuterie.
-import { formatTime, progressFraction, intensityTone, specLine } from './ui-helpers.js';
+import { formatTime, progressFraction, intensityTone, specLine, chronoShape, fitFontSize } from './ui-helpers.js';
 import { initDust } from './motion.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
 import { icon } from './icons.js';
 import { workingLoads, describeLoads, buildLoadCalcHTML } from './load-calc.js';
 
-const RING = 565.48; // 2π·90, doit correspondre à --ring dans le CSS
 const $ = id => document.getElementById(id);
 const screens = ['home', 'config', 'session', 'summary', 'guide', 'programs'];
 
@@ -16,6 +15,30 @@ const PARAM_LABELS = {
 };
 
 let dust = null; // poussière de magnésie, active seulement sur l'accueil
+
+// Chrono : la plus grande taille qui tient en largeur (plafonnée à 38 % de la hauteur).
+// Recalculée seulement quand la forme du texte change (« 10 » → « 9 », « 1:00 » → « 59 »),
+// au redimensionnement et quand les polices sont prêtes — jamais à chaque seconde.
+let chronoShapeShown = null;
+let chronoMeter = null;
+function fitChrono() {
+  const count = $('session-count');
+  const box = count.parentElement;
+  const availW = box.clientWidth;
+  if (!availW) return; // écran de séance caché
+  if (!chronoMeter) {
+    chronoMeter = document.createElement('span');
+    chronoMeter.className = 'count num chrono-meter';
+    chronoMeter.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(chronoMeter);
+  }
+  chronoMeter.textContent = chronoShape(count.textContent);
+  const widthAt100 = chronoMeter.getBoundingClientRect().width;
+  if (!widthAt100) return;
+  count.style.fontSize = `${fitFontSize(widthAt100, availW - 2, window.innerHeight)}px`;
+}
+window.addEventListener('resize', fitChrono);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitChrono);
 
 function show(name) {
   for (const s of screens) $(`screen-${s}`).classList.toggle('hidden', s !== name);
@@ -147,6 +170,8 @@ export function createUI(handlers) {
 
   function showSession() {
     show('session');
+    chronoShapeShown = null;
+    fitChrono();
   }
 
   function updatePhase(phase) {
@@ -163,9 +188,13 @@ export function createUI(handlers) {
   }
 
   function updateTick(remaining, phaseTotal) {
-    $('session-count').textContent = formatTime(remaining);
+    const text = formatTime(remaining);
+    $('session-count').textContent = text;
     const frac = progressFraction(remaining, phaseTotal);
-    $('ring-progress').style.strokeDashoffset = String(RING * frac);
+    $('session-bar').style.transform = `scaleX(${frac})`;
+    $('session-bar').parentElement.setAttribute('aria-valuenow', String(Math.round(frac * 100)));
+    const shape = chronoShape(text);
+    if (shape !== chronoShapeShown) { chronoShapeShown = shape; fitChrono(); }
   }
 
   function setNext(text) { $('session-next').textContent = text ? `Ensuite : ${text}` : ''; }

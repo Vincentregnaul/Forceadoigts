@@ -49,3 +49,26 @@ test('specLine : ligne de paramètres des cartes', () => {
   assert.equal(specLine(getProtocol('density-hangs')), '25 s · 1:30 · ×6');
   assert.equal(specLine(getProtocol('warmup')), 'Guidé · 15 min');
 });
+
+import { chronoShape, fitFontSize } from '../js/ui-helpers.js';
+
+test('chronoShape : remplace chaque chiffre par 0', () => {
+  assert.equal(chronoShape('8:59'), '0:00');
+  assert.equal(chronoShape('10:00'), '00:00');
+  assert.equal(chronoShape('7'), '0');
+});
+
+test('fitFontSize : plafond en hauteur puis en largeur', () => {
+  assert.equal(fitFontSize(50, 343, 812), 308);
+  assert.equal(fitFontSize(230, 343, 812), 149);
+});
+
+test('le chrono ne déborde jamais', () => {
+  for (const x of [50, 100, 175, 230]) {
+    for (const [w, h] of [[343, 812], [736, 1024], [992, 768], [780, 375]]) {
+      const size = fitFontSize(x, w, h);
+      assert.ok(size * x / 100 <= w, `largeur ${x} ${w}x${h}`);
+      assert.ok(size <= 0.38 * h, `hauteur ${x} ${w}x${h}`);
+    }
+  }
+});

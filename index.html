@@ -52,14 +52,12 @@
     <!-- Écran 3 : Séance -->
     <section id="screen-session" class="screen hidden">
       <div id="session-screen-inner" class="session phase-prepare">
-        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
-          <circle class="ring-bg" cx="100" cy="100" r="90" />
-          <circle id="ring-progress" class="ring-fg" cx="100" cy="100" r="90"
-                  transform="rotate(-90 100 100)" />
-        </svg>
-        <div class="ring-center">
-          <div id="session-count" class="count">0</div>
-          <div id="session-phase" class="phase-label">Prêt</div>
+        <div id="session-phase" class="phase-label display">Prêt</div>
+        <div class="chrono-box">
+          <div id="session-count" class="count num" role="timer">0</div>
+        </div>
+        <div class="bar" role="progressbar" aria-label="Progression de la phase" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="session-bar" class="bar-fill"></div>
         </div>
         <div id="session-sub" class="sub"></div>
         <div id="session-next" class="next"></div>
