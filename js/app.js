@@ -9,7 +9,7 @@ import { formatTime } from './ui-helpers.js';
 
 // Bornes d'ajustement par paramètre : [min, max, pas]
 const BOUNDS = {
-  tension: [3, 40, 1], restIntra: [1, 300, 1], reps: [1, 12, 1],
+  tension: [3, 40, 1], restIntra: [1, 300, 1], reps: [1, 24, 1],
   sets: [1, 10, 1], restInter: [30, 300, 15]
 };
 

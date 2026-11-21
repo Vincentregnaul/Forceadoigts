@@ -54,3 +54,21 @@ test('chaque protocole a une intensité entière entre 1 et 5', () => {
       `${p.id}.intensity doit être un entier de 1 à 5`);
   }
 });
+
+test('Abrahamsson suit la version évaluée en 2024 (10 s / 20 s × 20)', () => {
+  const p = getProtocol('no-hang-abrahamsson').params;
+  assert.equal(p.tension, 10);
+  assert.equal(p.restIntra, 20);
+  assert.equal(p.reps, 20);
+  assert.equal(p.sets, 1);
+});
+
+test('MED garde la marge de 3 s (réglette tenable ~13 s)', () => {
+  assert.match(getProtocol('min-edge-med').grip, /13 s/);
+});
+
+test('l échauffement monte jusqu à ~85 % et commence par un échauffement général', () => {
+  const w = getProtocol('warmup');
+  assert.ok(w.steps[0].duration >= 300, 'phase générale d au moins 5 min');
+  assert.ok(w.steps.some(s => s.kind === 'tension' && /85/.test(s.label)), 'suspension à ~85 %');
+});

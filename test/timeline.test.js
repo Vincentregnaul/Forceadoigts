@@ -61,3 +61,19 @@ test('mode steps (échauffement) : chaque step devient une phase + done', () => 
 test('totalDuration additionne les durées', () => {
   assert.equal(totalDuration([{ duration: 5 }, { duration: 7 }, { duration: 0 }]), 12);
 });
+
+test('Abrahamsson : 20 suspensions de 10 s, 19 repos de 20 s', () => {
+  const t = buildTimeline(getProtocol('no-hang-abrahamsson'));
+  const tensions = t.filter(p => p.kind === 'tension');
+  const rests = t.filter(p => p.kind === 'restIntra');
+  assert.equal(tensions.length, 20);
+  assert.ok(tensions.every(p => p.duration === 10));
+  assert.equal(rests.length, 19);
+  assert.ok(rests.every(p => p.duration === 20));
+  assert.equal(totalDuration(t), 5 + 20 * 10 + 19 * 20);
+});
+
+test('échauffement : durée totale entre 10 et 16 min', () => {
+  const total = totalDuration(buildTimeline(getProtocol('warmup')));
+  assert.ok(total >= 600 && total <= 960, `durée ${total} s`);
+});
