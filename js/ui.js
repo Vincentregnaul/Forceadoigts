@@ -1,5 +1,6 @@
 // ui.js — rend et met à jour les écrans. Aucune logique de minuterie.
-import { formatTime, progressFraction } from './ui-helpers.js';
+import { formatTime, progressFraction, intensityTone, specLine } from './ui-helpers.js';
+import { initDust } from './motion.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
 import { icon } from './icons.js';
@@ -14,8 +15,11 @@ const PARAM_LABELS = {
   reps: 'Répétitions', sets: 'Séries', restInter: 'Repos entre séries (s)'
 };
 
+let dust = null; // poussière de magnésie, active seulement sur l'accueil
+
 function show(name) {
   for (const s of screens) $(`screen-${s}`).classList.toggle('hidden', s !== name);
+  if (dust) dust.setActive(name === 'home');
 }
 
 // Calcul des charges : mémorise le poids et le lest dans ce navigateur (confort seulement).
@@ -47,6 +51,7 @@ function bindLoadCalc(prefix) {
 export function createUI(handlers) {
   // Icônes SVG des éléments statiques (data-icon="nom")
   for (const el of document.querySelectorAll('[data-icon]')) el.insertAdjacentHTML('afterbegin', icon(el.dataset.icon));
+  dust = initDust(document.querySelector('.hero'));
 
   // Réglages guidage
   const getSettings = () => ({
@@ -72,24 +77,27 @@ export function createUI(handlers) {
     const list = $('protocol-list');
     list.innerHTML = '';
     for (const p of protocols) {
+      const item = document.createElement('li');
       const card = document.createElement('button');
-      card.className = 'card';
       const lvl = p.intensity || 1;
+      card.className = `card tone-${intensityTone(lvl)}`;
       const segs = [1, 2, 3, 4, 5].map(i => `<i class="${i <= lvl ? 'on' : ''}"></i>`).join('');
+      // Pas de titre <h3> dans un bouton (contenu interdit) : des <span> stylés.
       card.innerHTML = `
-        <h3>${p.name}</h3>
-        <div class="goal">${p.goal}</div>
-        <div class="intensity">
-          <span class="int-label">Intensité</span>
-          <span class="gauge lvl-${lvl}">${segs}</span>
-        </div>
-        <div class="badges">
+        <span class="card-name display">${p.name}</span>
+        <span class="goal">${p.goal}</span>
+        <span class="card-row">
+          <span class="spec num">${specLine(p)}</span>
+          <span class="gauge" role="img" aria-label="Intensité ${lvl} sur 5">${segs}</span>
+        </span>
+        <span class="badges">
           <span class="badge">${p.level}</span>
           <span class="badge">${p.grip}</span>
           ${p.heavy ? '<span class="badge heavy">échauffe-toi avant</span>' : ''}
-        </div>`;
+        </span>`;
       card.addEventListener('click', () => handlers.onSelectProtocol(p.id));
-      list.appendChild(card);
+      item.appendChild(card);
+      list.appendChild(item);
     }
     show('home');
   }
