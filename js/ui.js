@@ -18,7 +18,7 @@ let dust = null; // poussière de magnésie, active seulement sur l'accueil
 
 // Chrono : la plus grande taille qui tient en largeur (plafonnée à 38 % de la hauteur).
 // Recalculée seulement quand la forme du texte change (« 10 » → « 9 », « 1:00 » → « 59 »),
-// au redimensionnement et quand les polices sont prêtes — jamais à chaque seconde.
+// au redimensionnement et à chaque chargement de police — jamais à chaque seconde.
 let chronoShapeShown = null;
 let chronoMeter = null;
 function fitChrono() {
@@ -38,7 +38,11 @@ function fitChrono() {
   count.style.fontSize = `${fitFontSize(widthAt100, availW - 2, window.innerHeight)}px`;
 }
 window.addEventListener('resize', fitChrono);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitChrono);
+if (document.fonts) {
+  if (document.fonts.ready) document.fonts.ready.then(fitChrono);
+  // Une police qui arrive en retard (premier lancement hors-ligne) pendant une séance.
+  if (document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', fitChrono);
+}
 
 function show(name) {
   for (const s of screens) $(`screen-${s}`).classList.toggle('hidden', s !== name);
