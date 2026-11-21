@@ -1,7 +1,7 @@
 # Refonte visuelle « Granite » — document de design
 
 - **Date :** 2026-11-21
-- **Statut :** à valider
+- **Statut :** validé et implémenté (branche claude/crimp-content-audit-518b9f)
 - **Maquettes de référence :** direction A « Granite » (artifact « Crimp — directions visuelles »)
 - **Prérequis :** contenu d'entraînement audité et corrigé (commits `2ddd0de` à `47b5c62`)
 
