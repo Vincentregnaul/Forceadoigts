@@ -42,3 +42,11 @@ test('pas de height: 100% dans le CSS', () => {
 test('le CSS respecte prefers-reduced-motion', () => {
   assert.ok(css.includes('@media (prefers-reduced-motion: reduce)'));
 });
+
+// Résumé à 375 px : « 13:05 » et « SUSPENSIONS » mesurent ~94 px ; une tuile doit
+// donc faire au moins 128 px (contenu + marges), sinon le texte déborde (relecture finale).
+test('les tuiles du résumé sont assez larges pour leur contenu', () => {
+  const m = css.match(/\.stats\s*\{[^}]*minmax\((\d+)px/);
+  assert.ok(m, 'grille .stats introuvable');
+  assert.ok(Number(m[1]) >= 128, `tuile minimale ${m[1]} px < 128 px`);
+});

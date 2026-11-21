@@ -150,7 +150,7 @@ body {
 /* Résumé */
 .summary-title { font-size: clamp(2.2rem, 10vw, 3rem); line-height: 1; color: var(--chalk); }
 .summary-title .icon { color: var(--rest); }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; }
 .stat { background: var(--slab); border: 1px solid var(--seam); border-radius: 12px; padding: 12px 14px; }
 .stat dt { color: var(--dust); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 .stat dd { color: var(--chalk); font-size: 2.6rem; line-height: 1.05; }
