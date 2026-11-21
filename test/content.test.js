@@ -49,3 +49,14 @@ test('aucun emoji dans l interface rendue', async () => {
   }
   for (const p of PROGRAMS) assert.doesNotMatch(p.badge, emoji, `emoji dans le badge ${p.id}`);
 });
+
+// La voix et le chrono (role="timer") portent l'information ; une barre de progression
+// annoncée ferait biper NVDA à chaque tick de 100 ms, en concurrence avec les bips de l'app.
+test('la barre de progression est décorative pour les lecteurs d écran', async () => {
+  const { readFileSync } = await import('node:fs');
+  const html = readFileSync('index.html', 'utf8');
+  const bar = html.match(/<div class="bar"[^>]*>/)[0];
+  assert.ok(bar.includes('aria-hidden="true"'), bar);
+  assert.ok(!bar.includes('role="progressbar"'), bar);
+  assert.ok(!readFileSync('js/ui.js', 'utf8').includes('aria-valuenow'));
+});

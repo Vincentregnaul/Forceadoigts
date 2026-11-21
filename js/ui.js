@@ -196,7 +196,6 @@ export function createUI(handlers) {
     $('session-count').textContent = text;
     const frac = progressFraction(remaining, phaseTotal);
     $('session-bar').style.transform = `scaleX(${frac})`;
-    $('session-bar').parentElement.setAttribute('aria-valuenow', String(Math.round(frac * 100)));
     const shape = chronoShape(text);
     if (shape !== chronoShapeShown) { chronoShapeShown = shape; fitChrono(); }
   }
