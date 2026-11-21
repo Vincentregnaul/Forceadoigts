@@ -62,6 +62,23 @@ test('totalDuration additionne les durées', () => {
   assert.equal(totalDuration([{ duration: 5 }, { duration: 7 }, { duration: 0 }]), 12);
 });
 
+test('sides : les tensions alternent les mains (label, voix, champ side)', () => {
+  const t = buildTimeline({ ...structured({ reps: 4, sets: 1 }), sides: ['main gauche', 'main droite'] });
+  const tensions = t.filter(p => p.kind === 'tension');
+  assert.deepEqual(tensions.map(p => p.side), ['main gauche', 'main droite', 'main gauche', 'main droite']);
+  assert.match(tensions[1].voice, /main droite/);
+  assert.match(tensions[1].label, /main droite/);
+  const rests = t.filter(p => p.kind === 'restIntra');
+  assert.match(rests[0].voice, /main droite/, 'le repos annonce la main suivante');
+});
+
+test('sans sides, side vaut null et la voix reste « Tension »', () => {
+  const t = buildTimeline(structured());
+  const tension = t.find(p => p.kind === 'tension');
+  assert.equal(tension.side, null);
+  assert.equal(tension.voice, 'Tension');
+});
+
 test('Abrahamsson : 20 suspensions de 10 s, 19 repos de 20 s', () => {
   const t = buildTimeline(getProtocol('no-hang-abrahamsson'));
   const tensions = t.filter(p => p.kind === 'tension');
@@ -78,6 +95,14 @@ test('test de force max : 8 essais de 7 s séparés de 2 min', () => {
   assert.equal(t.filter(p => p.kind === 'tension').length, 8);
   assert.ok(t.filter(p => p.kind === 'restIntra').every(p => p.duration === 120));
   assert.equal(totalDuration(t), 5 + 8 * 7 + 7 * 120);
+});
+
+test('recruitment pulls : 12 tirages qui alternent, 6 par main', () => {
+  const t = buildTimeline(getProtocol('recruitment-pulls'));
+  const sides = t.filter(p => p.kind === 'tension').map(p => p.side);
+  assert.equal(sides.length, 12);
+  assert.equal(sides.filter(s => s === 'main gauche').length, 6);
+  assert.equal(sides.filter(s => s === 'main droite').length, 6);
 });
 
 test('échauffement : durée totale entre 10 et 16 min', () => {

@@ -2,6 +2,7 @@
 // Structuré : params {prepare,tension,restIntra,reps,sets,restInter}.
 // Steps : échauffement à intensité progressive.
 // intensity : 1 (très léger) à 5 (maximal) — sert à la jauge visuelle.
+// sides (optionnel) : alterne les mains d'une tension à l'autre.
 // calc (optionnel) : affiche le calcul des charges de travail en fin de séance.
 // Sources de chaque paramètre : voir js/guide-content.js (section Sources).
 
@@ -116,6 +117,19 @@ export const PROTOCOLS = [
     safety: 'Idéal à la maison : charge contrôlée, pas de chute. Charge élevée (~85 %) : monte-la progressivement.',
     adjustable: ['tension', 'restIntra', 'reps', 'sets', 'restInter'],
     params: { prepare: 5, tension: 10, restIntra: 180, reps: 5, sets: 1, restInter: 180 }
+  },
+  {
+    id: 'recruitment-pulls',
+    intensity: 5,
+    name: 'Recruitment pulls',
+    goal: 'Force explosive (recrutement rapide)',
+    level: 'Intermédiaire et +',
+    grip: 'Une main, half-crimp, bloc ou réglette, coude légèrement fléchi',
+    heavy: true,
+    sides: ['main gauche', 'main droite'],
+    safety: 'Monte en force sur 1 à 2 s, puis serre au maximum. Jamais d’à-coup. Pieds au sol si besoin. Stop si douleur.',
+    adjustable: ['tension', 'restIntra', 'reps'],
+    params: { prepare: 5, tension: 5, restIntra: 90, reps: 12, sets: 1, restInter: 120 }
   }
 ];
 

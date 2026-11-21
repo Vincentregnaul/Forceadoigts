@@ -98,7 +98,8 @@ async function onStart() {
 function describe(phase) {
   const map = { tension: 'tension', restIntra: 'repos', restInter: 'repos entre séries',
     rest: 'repos', prepare: 'préparation' };
-  return `${map[phase.kind] || phase.kind} ${formatTime(phase.duration)}`;
+  const side = phase.side ? ` · ${phase.side}` : '';
+  return `${map[phase.kind] || phase.kind} ${formatTime(phase.duration)}${side}`;
 }
 
 function onPause() {

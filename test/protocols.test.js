@@ -2,8 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { PROTOCOLS, getProtocol } from '../js/protocols.js';
 
-test('il y a un échauffement + 7 protocoles de force', () => {
-  assert.equal(PROTOCOLS.length, 8);
+test('il y a un échauffement + 8 protocoles de force', () => {
+  assert.equal(PROTOCOLS.length, 9);
   assert.ok(PROTOCOLS.some(p => p.id === 'warmup'));
 });
 
@@ -76,6 +76,15 @@ test('le test de force max : 7 s, 2 min de repos, jusqu à 8 essais, avec calcul
   assert.equal(t.params.sets, 1);
   assert.equal(t.calc, true);
   assert.equal(t.heavy, true);
+});
+
+test('les recruitment pulls alternent les mains', () => {
+  const r = getProtocol('recruitment-pulls');
+  assert.ok(r, 'le protocole recruitment-pulls doit exister');
+  assert.deepEqual(r.sides, ['main gauche', 'main droite']);
+  assert.ok(r.params.tension >= 3 && r.params.tension <= 6, 'effort de 3 à 6 s');
+  assert.equal(r.params.reps % 2, 0, 'autant de tirages par main');
+  assert.equal(r.heavy, true);
 });
 
 test('l échauffement monte jusqu à ~85 % et commence par un échauffement général', () => {

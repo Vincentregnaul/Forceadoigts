@@ -56,6 +56,12 @@ const EXPLAIN = {
     how: 'Tirages isométriques de ~10 s à charge élevée (~85 %), 3 min de repos, 5 répétitions, half-crimp. 2 séances par semaine.',
     who: 'Intermédiaires et plus, car la charge est élevée. Le no-hang reste le plus simple à doser à la maison.',
     progress: 'Monte la charge de 1 à 3 % quand l’effort devient confortable.'
+  },
+  'recruitment-pulls': {
+    what: 'Force explosive : apprendre à mobiliser vite toute ta force. Chez 14 grimpeurs de niveau mondial, 4 semaines de tirages maximaux courts ont augmenté le taux de développement de la force de 27 à 32 %. Pour les autres niveaux, c’est une recommandation de coach (Tyler Nelson).',
+    how: 'Tirages à une main de 5 s à effort maximal (plus de 85 %), sur bloc ou réglette, pieds au sol si besoin. Monte en force sur 1 à 2 s, puis serre au maximum, coude légèrement fléchi (120-150°). Le minuteur alterne les mains : chaque main repose environ 3 min.',
+    who: 'Intermédiaires et plus, en complément d’un travail de force.',
+    progress: 'Passe à une réglette plus petite quand l’effort maximal devient facile à atteindre (Nelson).'
   }
 };
 
@@ -125,7 +131,7 @@ export function buildGuideHTML() {
       <tr><th>Niveau</th><th>Recommandé</th><th>Fréquence</th></tr>
       <tr><td>Débutant (&lt; 2 ans)</td><td>No-hang Abrahamsson, Density hangs</td><td>1-2×/sem</td></tr>
       <tr><td>Intermédiaire (2-5 ans)</td><td>Min Edge (MED), Repeaters, No-hang / Lift</td><td>2×/sem</td></tr>
-      <tr><td>Avancé (5+ ans)</td><td>Max Hangs (MAW→MED)</td><td>2-3×/sem</td></tr>
+      <tr><td>Avancé (5+ ans)</td><td>Max Hangs (MAW→MED), Recruitment pulls</td><td>2-3×/sem</td></tr>
     </table>
     <p class="lead">Ces seuils en années sont un repère de coach, pas un résultat d'étude. Repères d'Eva López avant les Max Hangs lestés : environ 2 ans de pratique régulière, et tenir ~40 s sur 20 mm et ~15 s sur 10 mm au poids du corps. En dessous, reste sur basse intensité et escalade.</p>
 
@@ -165,6 +171,7 @@ export function buildGuideHTML() {
         <li>${link(pm(34188125), 'Mundry et al. (2021), Scientific Reports')} — ajout de lest contre réduction de réglette.</li>
         <li>${link(pm(35571743), 'Hermans et al. (2022), Frontiers in Sports and Active Living')} — 10 semaines de repeaters 7:3.</li>
         <li>${link(pm(39560837), 'Gilmore et al. (2024), Sports Medicine – Open')} — Abrahangs, Max Hangs et leur combinaison.</li>
+        <li>${link(pm(28945641), 'Levernier &amp; Laffaye (2019), J. Strength Cond. Res.')} — force max et taux de développement de la force.</li>
         <li>${link(pm(39450143), 'Saeterbakken et al. (2024), Frontiers in Physiology')} — tirages au bloc et performance en bloc.</li>
         <li>${link('https://revista-apunts.com/en/comparative-analysis-of-two-grip-strength-training-protocols-in-experienced-climbers/', 'Ruiz-López et al. (2025), Apunts')} — traction sur capteur contre suspension lestée.</li>
         <li>${link(pm(41103490), 'Pérez-Cordero et al. (2025), Frontiers in Sports and Active Living')} — fiabilité des tests de force.</li>

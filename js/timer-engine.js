@@ -2,7 +2,7 @@
 
 function donePhase() {
   return { kind: 'done', duration: 0, label: 'Terminé', voice: 'Terminé, bravo',
-    repIndex: null, repTotal: null, setIndex: null, setTotal: null };
+    repIndex: null, repTotal: null, setIndex: null, setTotal: null, side: null };
 }
 
 function buildFromSteps(protocol) {
@@ -11,7 +11,7 @@ function buildFromSteps(protocol) {
     duration: s.duration,
     label: s.label,
     voice: s.voice || (s.kind === 'tension' ? 'Tension' : s.kind === 'rest' ? 'Repos' : 'Prépare'),
-    repIndex: null, repTotal: null, setIndex: null, setTotal: null
+    repIndex: null, repTotal: null, setIndex: null, setTotal: null, side: null
   }));
   phases.push(donePhase());
   return phases;
@@ -19,25 +19,36 @@ function buildFromSteps(protocol) {
 
 function buildFromParams(protocol) {
   const { prepare, tension, restIntra, reps, sets, restInter } = protocol.params;
+  // sides (optionnel) : alterne les mains d'une tension à l'autre, ex. ['main gauche', 'main droite'].
+  const sides = Array.isArray(protocol.sides) && protocol.sides.length ? protocol.sides : null;
+  let tensionCount = 0;
+  const sideAt = n => (sides ? sides[n % sides.length] : null);
   const phases = [];
-  phases.push({ kind: 'prepare', duration: prepare, label: 'Préparez-vous', voice: 'Préparez-vous',
-    repIndex: null, repTotal: reps, setIndex: 1, setTotal: sets });
+  phases.push({ kind: 'prepare', duration: prepare,
+    label: sides ? `Préparez-vous · ${sideAt(0)}` : 'Préparez-vous',
+    voice: sides ? `Préparez-vous, ${sideAt(0)}` : 'Préparez-vous',
+    repIndex: null, repTotal: reps, setIndex: 1, setTotal: sets, side: null });
 
   for (let s = 1; s <= sets; s++) {
     for (let r = 1; r <= reps; r++) {
+      const side = sideAt(tensionCount);
+      tensionCount++;
       phases.push({ kind: 'tension', duration: tension,
-        label: `Rep ${r}/${reps} · Série ${s}/${sets}`, voice: 'Tension',
-        repIndex: r, repTotal: reps, setIndex: s, setTotal: sets });
+        label: `Rep ${r}/${reps} · Série ${s}/${sets}${side ? ` · ${side}` : ''}`,
+        voice: side ? `Tension, ${side}` : 'Tension',
+        repIndex: r, repTotal: reps, setIndex: s, setTotal: sets, side });
       if (r < reps) {
+        const nextSide = sideAt(tensionCount);
         phases.push({ kind: 'restIntra', duration: restIntra,
-          label: `Repos · Série ${s}/${sets}`, voice: 'Repos',
-          repIndex: r, repTotal: reps, setIndex: s, setTotal: sets });
+          label: `Repos · Série ${s}/${sets}${nextSide ? ` · ensuite ${nextSide}` : ''}`,
+          voice: nextSide ? `Repos. Ensuite, ${nextSide}` : 'Repos',
+          repIndex: r, repTotal: reps, setIndex: s, setTotal: sets, side: null });
       }
     }
     if (s < sets) {
       phases.push({ kind: 'restInter', duration: restInter,
         label: `Repos entre séries · ${s}/${sets} faites`, voice: 'Repos entre séries',
-        repIndex: null, repTotal: reps, setIndex: s, setTotal: sets });
+        repIndex: null, repTotal: reps, setIndex: s, setTotal: sets, side: null });
     }
   }
   phases.push(donePhase());
