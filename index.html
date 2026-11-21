@@ -35,10 +35,15 @@
     <!-- Écran 2 : Réglage avant séance -->
     <section id="screen-config" class="screen hidden">
       <button id="btn-config-back" class="link-back" data-icon="back">Retour</button>
-      <h2 id="config-title"></h2>
+      <h2 id="config-title" class="display"></h2>
       <p id="config-meta" class="meta"></p>
+      <div class="config-row">
+        <span id="config-spec" class="spec num"></span>
+        <span id="config-level" class="badge"></span>
+        <span id="config-gauge" class="gauge" role="img"></span>
+      </div>
       <p id="warmup-hint" class="hint hidden" data-icon="alert">Protocole lourd — pense à lancer l'échauffement d'abord.</p>
-      <p id="youth-hint" class="hint hidden">Moins de 18 ans : prudence, les cartilages de croissance des doigts sont fragiles. Une douleur sur le dos d'une articulation du doigt doit faire consulter.</p>
+      <p id="youth-hint" class="hint hidden" data-icon="alert">Moins de 18 ans : prudence, les cartilages de croissance des doigts sont fragiles. Une douleur sur le dos d'une articulation du doigt doit faire consulter.</p>
       <div id="config-params" class="params"></div>
       <p id="config-safety" class="safety"></p>
       <button id="btn-start" class="btn-primary">Démarrer</button>

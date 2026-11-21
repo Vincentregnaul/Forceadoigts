@@ -76,25 +76,45 @@ body {
 .gauge i { width: 16px; height: 8px; border-radius: 2px; background: var(--seam); transform: skewX(-20deg); }
 .card .gauge i.on { background: var(--tone); }
 
-.link-back { background: none; border: none; color: var(--rest); font-size: 1rem; text-align: left; }
-.meta, .safety, .hint { color: var(--dust); font-size: 0.9rem; line-height: 1.4; }
-.safety { border-left: 3px solid var(--prepare); padding-left: 10px; }
-.hint { color: var(--prepare); }
+.link-back {
+  display: inline-flex; align-items: center; align-self: flex-start; min-height: 44px; padding: 0 4px 0 0;
+  background: none; border: none; color: var(--chalk); font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.link-back .icon { margin-right: 2px; }
+.meta, .safety, .hint { color: var(--dust); font-size: 0.9rem; line-height: 1.45; }
 
-.params { display: flex; flex-direction: column; gap: 10px; }
-.param-row { display: flex; align-items: center; justify-content: space-between;
-  background: var(--slab); border-radius: 12px; padding: 10px 14px; }
-.param-row .label { font-size: 0.95rem; }
-.stepper { display: flex; align-items: center; gap: 12px; }
-.stepper button { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--seam);
-  background: var(--slab); color: var(--chalk); font-size: 1.3rem; }
-.stepper .value { min-width: 56px; text-align: center; font-variant-numeric: tabular-nums; }
+/* Réglage */
+#screen-config { --tone: var(--rest); }
+#screen-config.tone-prepare { --tone: var(--prepare); }
+#screen-config.tone-tension { --tone: var(--tension); }
+#config-title { font-size: clamp(2.4rem, 11vw, 3.2rem); line-height: 0.95; color: var(--chalk); }
+.config-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#config-gauge i.on { background: var(--tone); }
+.hint {
+  display: flex; align-items: flex-start; gap: 2px; color: var(--chalk);
+  background: var(--slab); border-left: 3px solid var(--prepare); border-radius: 8px; padding: 10px 12px;
+}
+.hint .icon { color: var(--prepare); margin-top: 0.15em; vertical-align: 0; }
+.safety { border-left: 3px solid var(--seam); padding-left: 12px; }
+
+.params { display: flex; flex-direction: column; gap: 8px; }
+.param-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--slab); border: 1px solid var(--seam); border-radius: 12px; padding: 8px 10px 8px 14px;
+}
+.param-row .label { font-size: 0.95rem; color: var(--chalk); }
+.stepper { display: flex; align-items: center; gap: 6px; flex: none; }
+.stepper button {
+  width: 48px; height: 48px; border-radius: 10px; border: 1px solid var(--seam);
+  background: var(--granite); color: var(--chalk); font: inherit; font-size: 1.5rem; line-height: 1; cursor: pointer;
+}
+.stepper .value { min-width: 64px; text-align: center; font-size: 2rem; line-height: 1; color: var(--chalk); }
 
 .btn-primary, .btn-secondary {
   display: flex; align-items: center; justify-content: center; gap: 2px; min-height: 52px;
   padding: 14px 16px; border-radius: 12px; border: 1px solid transparent; font: inherit; font-size: 1.05rem; font-weight: 600; cursor: pointer;
 }
-.btn-primary { background: var(--chalk); color: var(--granite); }
+.btn-primary { background: var(--chalk); color: var(--granite); min-height: 56px; font-size: 1.15rem; }
 .btn-secondary { background: var(--slab); color: var(--chalk); border-color: var(--seam); }
 
 /* Séance */

@@ -103,8 +103,15 @@ export function createUI(handlers) {
   }
 
   function showConfig(protocol, workingParams) {
+    const lvl = protocol.intensity || 1;
+    $('screen-config').className = `screen tone-${intensityTone(lvl)}`;
     $('config-title').textContent = protocol.name;
     $('config-meta').textContent = `${protocol.goal} · ${protocol.grip}`;
+    $('config-spec').textContent = specLine(protocol);
+    $('config-level').textContent = protocol.level;
+    const gauge = $('config-gauge');
+    gauge.setAttribute('aria-label', `Intensité ${lvl} sur 5`);
+    gauge.innerHTML = [1, 2, 3, 4, 5].map(i => `<i class="${i <= lvl ? 'on' : ''}"></i>`).join('');
     $('config-safety').textContent = protocol.safety;
     $('warmup-hint').classList.toggle('hidden', !protocol.heavy);
     $('youth-hint').classList.toggle('hidden', !protocol.heavy);
@@ -115,12 +122,13 @@ export function createUI(handlers) {
       for (const key of protocol.adjustable) {
         const row = document.createElement('div');
         row.className = 'param-row';
+        const label = PARAM_LABELS[key] || key;
         row.innerHTML = `
-          <span class="label">${PARAM_LABELS[key] || key}</span>
+          <span class="label">${label}</span>
           <span class="stepper">
-            <button data-act="dec">−</button>
-            <span class="value" id="val-${key}">${workingParams[key]}</span>
-            <button data-act="inc">+</button>
+            <button type="button" data-act="dec" aria-label="Diminuer : ${label}">−</button>
+            <span class="value num" id="val-${key}" aria-live="polite">${workingParams[key]}</span>
+            <button type="button" data-act="inc" aria-label="Augmenter : ${label}">+</button>
           </span>`;
         row.querySelector('[data-act="dec"]').addEventListener('click', () => handlers.onAdjust(key, -1));
         row.querySelector('[data-act="inc"]').addEventListener('click', () => handlers.onAdjust(key, +1));
