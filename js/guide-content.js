@@ -160,6 +160,7 @@ export function buildGuideHTML() {
       <li><strong>Patience des tissus</strong> : tendons et poulies mettent des années à s'adapter. Eva López déconseille la poutre avant environ 2 ans de pratique régulière.</li>
       <li><strong>Signaux d'alerte</strong> : douleur aiguë, claquement, gonflement → arrêt immédiat. Fatigue musculaire et pump = normal.</li>
       <li><strong>Après une blessure</strong> : la reprise se fait par une charge progressive, encadrée par un professionnel de santé.</li>
+      <li><strong>Moins de 18 ans</strong> : chez les jeunes grimpeurs, près de la moitié des blessures sont des lésions de stress des cartilages de croissance des doigts (45 % dans un suivi de 137 blessures). L'entraînement intensif des doigts, comme le campus, est un facteur de risque connu. Limite la prise arquée, surveille la charge totale et la récupération. Une douleur sur le dos de l'articulation du milieu du doigt doit faire consulter rapidement.</li>
     </ul>
 
     <h3>Sources</h3>
@@ -179,6 +180,7 @@ export function buildGuideHTML() {
         <li>${link(pm(38162697), 'Quarmby et al. (2023), revue systématique')} — facteurs de risque des blessures de surmenage.</li>
         <li>${link(pm(37927449), 'Exel et al. (2023)')} — position des bras pendant la suspension.</li>
         <li>${link(pm(28332110), 'Baar (2017), Sports Medicine')} — ligaments cultivés en laboratoire et délai de 6 h.</li>
+        <li>${link(pm(39995613), 'Schöffl et al. (2025), BMJ Open Sport &amp; Exercise Medicine')} et ${link(pm(33156031), 'Meyers et al. (2020)')} — blessures des cartilages de croissance chez les adolescents.</li>
       </ul>
       <p><strong>Coachs</strong></p>
       <ul>

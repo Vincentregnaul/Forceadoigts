@@ -95,6 +95,7 @@ export function createUI(handlers) {
     $('config-meta').textContent = `${protocol.goal} · ${protocol.grip}`;
     $('config-safety').textContent = protocol.safety;
     $('warmup-hint').classList.toggle('hidden', !protocol.heavy);
+    $('youth-hint').classList.toggle('hidden', !protocol.heavy);
 
     const box = $('config-params');
     box.innerHTML = '';

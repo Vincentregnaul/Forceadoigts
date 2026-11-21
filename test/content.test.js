@@ -32,3 +32,9 @@ test('le guide contient le calcul des charges et l avertissement de santé', () 
   assert.ok(guide.includes('id="guide-body"'));
   assert.match(guide, /ne remplace pas un coach ni un professionnel de santé/);
 });
+
+test('le guide avertit les adolescents, avec ses sources', () => {
+  assert.match(guide, /cartilages de croissance/);
+  assert.ok(guide.includes('pubmed.ncbi.nlm.nih.gov/39995613/'), 'Schöffl et al. 2025');
+  assert.ok(guide.includes('pubmed.ncbi.nlm.nih.gov/33156031/'), 'Meyers et al. 2020');
+});
