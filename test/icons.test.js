@@ -16,3 +16,10 @@ test('chaque icône est un SVG décoratif en currentColor', () => {
 test('nom d icône inconnu', () => {
   assert.throws(() => icon('nope'));
 });
+
+test('les tracés Lucide gardent leur avis de licence', async () => {
+  const { readFileSync } = await import('node:fs');
+  const src = readFileSync('js/icons.js', 'utf8');
+  assert.ok(src.includes('ISC License'));
+  assert.ok(src.includes('Permission to use, copy, modify, and/or distribute this software'));
+});
