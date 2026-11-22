@@ -75,6 +75,56 @@ body {
 .gauge i { width: 16px; height: 8px; border-radius: 2px; background: var(--seam); transform: skewX(-20deg); }
 .card .gauge i.on { background: var(--tone); }
 
+/* Choix par niveau : sélecteur, slider des recommandés, autres protocoles */
+.level-picker { display: flex; flex-direction: column; gap: 8px; }
+.level-title { color: var(--dust); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.level-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.level-buttons button {
+  min-height: 44px; padding: 8px 4px; border-radius: 10px; border: 1px solid var(--seam);
+  background: var(--slab); color: var(--chalk); font: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+}
+.level-buttons button[aria-pressed="true"] { background: var(--chalk); color: var(--granite); border-color: var(--chalk); }
+.level-hint { color: var(--dust); font-size: 0.9rem; }
+
+.reco { display: flex; flex-direction: column; gap: 8px; }
+.reco-track {
+  display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px;
+  margin: 0 -16px; padding: 4px 16px 8px; scrollbar-width: thin; scroll-behavior: smooth;
+}
+.slide {
+  --tone: var(--rest);
+  flex: 0 0 85%; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px;
+  background: var(--slab); border: 1px solid var(--seam); border-left: 4px solid var(--tone); border-radius: 12px;
+  padding: 14px 16px; text-align: left; color: var(--chalk); font: inherit; cursor: pointer;
+}
+.slide.tone-prepare { --tone: var(--prepare); }
+.slide.tone-tension { --tone: var(--tension); }
+.slide.slide-program { --tone: var(--chalk); }
+.slide-badge {
+  display: inline-flex; align-items: center; align-self: flex-start; font-size: 0.75rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 999px; background: var(--granite); color: var(--prepare);
+}
+.slide-badge .icon { margin-right: 0.35em; }
+.slide .card-name { font-size: 1.6rem; line-height: 1; }
+.slide-pros { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 0.92rem; line-height: 1.35; }
+.slide-pros li { padding-left: 14px; position: relative; }
+.slide-pros li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; border-radius: 50%; background: var(--tone); }
+.slide-limit { color: var(--dust); font-size: 0.85rem; line-height: 1.35; }
+.reco-dots { display: flex; justify-content: center; gap: 6px; }
+.reco-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--seam); }
+.reco-dots i.on { background: var(--chalk); }
+
+.others { background: var(--slab); border: 1px solid var(--seam); border-radius: 12px; padding: 0 12px; }
+.others > summary {
+  min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  cursor: pointer; list-style: none; font-weight: 600; color: var(--chalk);
+}
+.others > summary::-webkit-details-marker { display: none; }
+.others > summary::after { content: "+"; color: var(--dust); font-size: 1.3rem; line-height: 1; }
+.others[open] > summary::after { content: "–"; }
+.others .cards { padding-bottom: 12px; }
+.others .card { background: var(--granite); }
+
 .link-back {
   display: inline-flex; align-items: center; align-self: flex-start; min-height: 44px; padding: 0 4px 0 0;
   background: none; border: none; color: var(--chalk); font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;

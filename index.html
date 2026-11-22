@@ -21,7 +21,20 @@
         <h1 class="brand display" aria-label="Crimp"><span aria-hidden="true" style="--i:0">C</span><span aria-hidden="true" style="--i:1">R</span><span aria-hidden="true" style="--i:2">I</span><span aria-hidden="true" style="--i:3">M</span><span aria-hidden="true" style="--i:4">P</span></h1>
         <p class="tagline">Force à doigt · minuteur guidé</p>
       </header>
-      <ul id="protocol-list" class="cards" aria-label="Protocoles"></ul>
+      <div class="level-picker" role="group" aria-labelledby="level-title">
+        <p id="level-title" class="level-title">Ton niveau</p>
+        <div id="level-buttons" class="level-buttons"></div>
+        <p id="level-hint" class="level-hint"></p>
+      </div>
+      <section id="reco" class="reco hidden" aria-label="Protocoles recommandés">
+        <div id="reco-track" class="reco-track"></div>
+        <div id="reco-dots" class="reco-dots" aria-hidden="true"></div>
+      </section>
+      <ul id="warmup-slot" class="cards" aria-label="Échauffement"></ul>
+      <details id="others" class="others">
+        <summary id="others-summary">Tous les protocoles</summary>
+        <ul id="protocol-list" class="cards" aria-label="Protocoles"></ul>
+      </details>
       <button id="btn-open-programs" class="btn-secondary" data-icon="calendar">Programmes semaine par semaine</button>
       <button id="btn-open-guide" class="btn-secondary" data-icon="book">Guide &amp; méthodologie</button>
       <details class="settings">

@@ -4,6 +4,7 @@ import { initDust, countUp } from './motion.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
 import { icon } from './icons.js';
+import { LEVELS, BENEFITS, recommendationFor, otherProtocols } from './recommend.js';
 import { workingLoads, describeLoads, buildLoadCalcHTML } from './load-calc.js';
 
 const $ = id => document.getElementById(id);
@@ -50,6 +51,18 @@ function show(name) {
 }
 
 // Calcul des charges : mémorise le poids et le lest dans ce navigateur (confort seulement).
+// Niveau choisi sur l'accueil (confort seulement : sans stockage, le choix vaut pour la visite).
+const LEVEL_KEY = 'crimp-level';
+let levelMemory = null;
+function readLevel() {
+  try { const v = localStorage.getItem(LEVEL_KEY); if (v !== null) levelMemory = v; } catch { /* stockage indisponible */ }
+  return recommendationFor(levelMemory) ? levelMemory : null;
+}
+function writeLevel(id) {
+  levelMemory = id;
+  try { localStorage.setItem(LEVEL_KEY, id); } catch { /* stockage indisponible */ }
+}
+
 const CALC_KEY = 'crimp-calc';
 function readCalc() {
   try { return JSON.parse(localStorage.getItem(CALC_KEY)) || {}; } catch { return {}; }
@@ -101,10 +114,7 @@ export function createUI(handlers) {
   $('btn-open-programs').addEventListener('click', () => handlers.onOpenPrograms());
   $('btn-programs-back').addEventListener('click', () => handlers.onHome());
 
-  function showHome(protocols) {
-    const list = $('protocol-list');
-    list.innerHTML = '';
-    for (const p of protocols) {
+  function protocolCard(p) {
       const item = document.createElement('li');
       const card = document.createElement('button');
       const lvl = p.intensity || 1;
@@ -122,11 +132,101 @@ export function createUI(handlers) {
           <span class="badge">${p.level}</span>
           <span class="badge">${p.grip}</span>
           ${p.heavy ? '<span class="badge heavy">échauffe-toi avant</span>' : ''}
+          ${p.id === 'warmup' ? '<span class="badge heavy">à faire avant les séances lourdes</span>' : ''}
         </span>`;
       card.addEventListener('click', () => handlers.onSelectProtocol(p.id));
       item.appendChild(card);
-      list.appendChild(item);
+      return item;
+  }
+
+  // Slider des protocoles recommandés pour un niveau, puis le programme conseillé.
+  let dotsObserver = null;
+  function renderReco(reco) {
+    const track = $('reco-track');
+    const dots = $('reco-dots');
+    if (dotsObserver) { dotsObserver.disconnect(); dotsObserver = null; }
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    $('reco').classList.toggle('hidden', !reco);
+    if (!reco) return;
+    const slides = reco.protocols.map(p => {
+      const b = BENEFITS[p.id] || { pros: [] };
+      const slide = document.createElement('button');
+      slide.type = 'button';
+      slide.className = `slide tone-${intensityTone(p.intensity || 1)}`;
+      slide.innerHTML = `
+        <span class="slide-badge">${icon('star')}Recommandé · ${reco.level.label}</span>
+        <span class="card-name display">${p.name}</span>
+        <span class="spec num">${specLine(p)}</span>
+        <ul class="slide-pros">${b.pros.map(t => `<li>${t}</li>`).join('')}</ul>
+        ${b.limit ? `<span class="slide-limit">${b.limit}</span>` : ''}`;
+      slide.addEventListener('click', () => handlers.onSelectProtocol(p.id));
+      return slide;
+    });
+    const prog = document.createElement('button');
+    prog.type = 'button';
+    prog.className = 'slide slide-program';
+    prog.innerHTML = `
+      <span class="slide-badge">${icon('calendar')}Programme conseillé</span>
+      <span class="card-name display">${reco.program.name}</span>
+      <span class="spec num">${reco.program.duration}</span>
+      <span class="slide-limit">Le plan semaine par semaine pour ton niveau.</span>`;
+    prog.addEventListener('click', () => handlers.onOpenPrograms());
+    slides.push(prog);
+    for (const s of slides) {
+      // Au clavier, la fiche ciblée défile dans le cadre.
+      s.addEventListener('focus', () => s.scrollIntoView({ block: 'nearest', inline: 'nearest' }));
+      track.appendChild(s);
+      dots.appendChild(document.createElement('i'));
     }
+    dots.firstChild.classList.add('on');
+    if ('IntersectionObserver' in window) {
+      dotsObserver = new IntersectionObserver(entries => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const i = slides.indexOf(e.target);
+          [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
+        }
+      }, { root: track, threshold: 0.6 });
+      slides.forEach(s => dotsObserver.observe(s));
+    }
+  }
+
+  function renderHome(protocols) {
+    const levelId = readLevel();
+    const reco = recommendationFor(levelId);
+    const buttons = $('level-buttons');
+    buttons.innerHTML = '';
+    for (const l of LEVELS) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = l.label;
+      b.setAttribute('aria-pressed', String(l.id === levelId));
+      b.addEventListener('click', () => {
+        writeLevel(l.id);
+        renderHome(protocols);
+        buttons.querySelector('[aria-pressed="true"]').focus();
+      });
+      buttons.appendChild(b);
+    }
+    $('level-hint').textContent = reco
+      ? `${reco.level.label} : ${reco.level.hint}. Repère de coach.`
+      : 'Choisis ton niveau pour voir les protocoles recommandés.';
+    renderReco(reco);
+    const warm = $('warmup-slot');
+    warm.innerHTML = '';
+    const warmup = protocols.find(p => p.id === 'warmup');
+    if (warmup) warm.appendChild(protocolCard(warmup));
+    const list = $('protocol-list');
+    list.innerHTML = '';
+    const others = otherProtocols(levelId);
+    for (const p of others) list.appendChild(protocolCard(p));
+    $('others').open = !reco;
+    $('others-summary').textContent = reco ? `Autres protocoles (${others.length})` : 'Tous les protocoles';
+  }
+
+  function showHome(protocols) {
+    renderHome(protocols);
     show('home');
   }
 
