@@ -60,3 +60,21 @@ test('la barre de progression est décorative pour les lecteurs d écran', async
   assert.ok(!bar.includes('role="progressbar"'), bar);
   assert.ok(!readFileSync('js/ui.js', 'utf8').includes('aria-valuenow'));
 });
+
+test('le tableau du guide suit les recommandations de l accueil', async () => {
+  const { LEVELS, RECOMMENDED, recommendationFor } = await import('../js/recommend.js');
+  const start = guide.indexOf('Quel protocole pour toi ?');
+  const table = guide.slice(guide.indexOf('<table>', start), guide.indexOf('</table>', start));
+  const rows = table.split('<tr>').slice(2); // en-tête ignorée
+  for (const level of LEVELS) {
+    const row = rows.find(r => r.includes(level.label));
+    assert.ok(row, `ligne manquante : ${level.label}`);
+    for (const p of recommendationFor(level.id).protocols) assert.ok(row.includes(p.name), `${p.name} absent de ${level.label}`);
+    for (const other of LEVELS.filter(l => l.id !== level.id)) {
+      for (const id of RECOMMENDED[other.id].protocols) {
+        const name = recommendationFor(other.id).protocols.find(p => p.id === id).name;
+        assert.ok(!row.includes(name), `${name} en trop dans ${level.label}`);
+      }
+    }
+  }
+});

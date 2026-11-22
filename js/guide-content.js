@@ -5,6 +5,7 @@
 import { PROTOCOLS } from './protocols.js';
 import { buildLoadCalcHTML } from './load-calc.js';
 import { icon } from './icons.js';
+import { LEVELS as CLIMB_LEVELS, recommendationFor } from './recommend.js';
 
 const pm = id => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 
@@ -76,6 +77,8 @@ function gauge(lvl) {
 const link = (href, text) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
 
 export function buildGuideHTML() {
+  // Même source que le slider « Recommandé » de l'accueil (js/recommend.js).
+  const levelRows = CLIMB_LEVELS.map(l => `<tr><td>${l.label} (${l.hint})</td><td>${recommendationFor(l.id).protocols.map(p => p.name).join(', ')}</td><td>${l.frequency}</td></tr>`).join('');
   const protocolsDetail = PROTOCOLS.map(p => {
     const e = EXPLAIN[p.id];
     if (!e) return '';
@@ -130,9 +133,7 @@ export function buildGuideHTML() {
     <h3>Quel protocole pour toi ?</h3>
     <table>
       <tr><th>Niveau</th><th>Recommandé</th><th>Fréquence</th></tr>
-      <tr><td>Débutant (&lt; 2 ans)</td><td>No-hang Abrahamsson, Density hangs</td><td>1-2×/sem</td></tr>
-      <tr><td>Intermédiaire (2-5 ans)</td><td>Min Edge (MED), Repeaters, No-hang / Lift</td><td>2×/sem</td></tr>
-      <tr><td>Avancé (5+ ans)</td><td>Max Hangs (MAW→MED), Recruitment pulls</td><td>2-3×/sem</td></tr>
+      ${levelRows}
     </table>
     <p class="lead">Ces seuils en années sont un repère de coach, pas un résultat d'étude. Repères d'Eva López avant les Max Hangs lestés : environ 2 ans de pratique régulière, et tenir ~40 s sur 20 mm et ~15 s sur 10 mm au poids du corps. En dessous, reste sur basse intensité et escalade.</p>
 
