@@ -55,3 +55,19 @@ test('les autres protocoles complètent la liste', () => {
   assert.equal(otherProtocols(null).length, 8);
   assert.ok(!otherProtocols(null).some(p => p.id === 'warmup'));
 });
+
+// Relecture finale : les avantages ne disent rien de plus que le guide audité.
+test('les avantages restent fidèles au guide audité', async () => {
+  const { buildGuideHTML } = await import('../js/guide-content.js');
+  const guide = buildGuideHTML();
+  const all = id => [...BENEFITS[id].pros, BENEFITS[id].limit || ''].join(' ');
+  assert.doesNotMatch(all('max-hangs-mad'), /le plus étudié/i);
+  assert.doesNotMatch(BENEFITS['no-hang-abrahamsson'].pros.join(' '), /Max Hangs/, 'oriente un débutant vers les Max Hangs');
+  for (const t of BENEFITS['no-hang-abrahamsson'].pros) if (/2 fois par jour/.test(t)) assert.match(t, /6 h/);
+  assert.ok(BENEFITS['repeaters-7-3'].limit, 'limite manquante pour Repeaters (essai de 2022)');
+  for (const id of Object.keys(BENEFITS)) {
+    for (const figure of all(id).match(/\d+(?:,\d+)? %/g) || []) {
+      assert.ok(guide.includes(figure), `${id} : « ${figure} » absent du guide`);
+    }
+  }
+});

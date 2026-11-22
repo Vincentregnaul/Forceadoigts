@@ -19,8 +19,8 @@ export const RECOMMENDED = {
 
 export const BENEFITS = {
   'no-hang-abrahamsson': {
-    pros: ['Peu de fatigue : pieds au sol, légère tension (~40 %)', '10 minutes, jusqu’à 2 fois par jour',
-      'Combiné aux Max Hangs : le meilleur gain dans l’analyse de 2024'],
+    pros: ['Basse intensité : pieds au sol, légère tension (~40 %)',
+      '10 minutes, jusqu’à 2 fois par jour (au moins 6 h d’écart)', 'Accessible à tous, même sans matériel lourd'],
     limit: 'Une seule étude, rétrospective, charge non mesurée.'
   },
   'density-hangs': {
@@ -32,16 +32,17 @@ export const BENEFITS = {
     limit: 'Un essai de 2021 n’a pas trouvé d’effet net de la réglette réduite seule.'
   },
   'repeaters-7-3': {
-    pros: ['Force-endurance : idéal en voie et grande longueur',
-      'Bien chargés, ils développent aussi la force (+12,4 %, essai de 2022)']
+    pros: ['Force-endurance, utile en voie et grande longueur',
+      'Bien chargés, ils développent aussi la force (+12,4 %, essai de 2022)'],
+    limit: 'Pour la force pure, l’effort maximal a fait un peu mieux (+14,3 %, même essai).'
   },
   'no-hang-lift': {
     pros: ['Charge précise, sans chute', 'Gains proches des suspensions lestées (petite étude de 2025)'],
     limit: 'Il faut un bloc de préhension et du lest.'
   },
   'max-hangs-mad': {
-    pros: ['Le plus étudié pour la force maximale (+28 % en 8 semaines, López)',
-      'Séance courte : 5 suspensions de 10 s'],
+    pros: ['Force maximale par l’intensité : suspensions courtes et lourdes',
+      '+28 % en 8 semaines (López, Max Hangs puis Min Edge)', 'Séance courte : 5 suspensions de 10 s'],
     limit: 'Pour grimpeurs confirmés ; écart non significatif avec les autres groupes.'
   },
   'recruitment-pulls': {
