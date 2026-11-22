@@ -82,3 +82,12 @@ test('countUpAt : monte vers la cible, valeur finale sans animation', () => {
   assert.equal(countUpAt(100, 5000), 100);
   assert.equal(countUpAt(42, 123, 0), 42); // mouvement réduit : durée 0
 });
+
+import { paramsChanged } from '../js/ui-helpers.js';
+
+test('paramsChanged : réglages recommandés ou modifiés', () => {
+  const defaults = getProtocol('max-hangs-mad').params;
+  assert.equal(paramsChanged(defaults, { ...defaults }), false);
+  assert.equal(paramsChanged(defaults, { ...defaults, restIntra: 150 }), true);
+  assert.equal(paramsChanged(null, null), false); // échauffement guidé : rien à régler
+});

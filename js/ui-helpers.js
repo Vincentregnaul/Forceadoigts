@@ -58,3 +58,9 @@ export function countUpAt(target, elapsedMs, durationMs = 800) {
   const p = Math.min(1, Math.max(0, elapsedMs / durationMs));
   return Math.round(target * (1 - (1 - p) ** 3));
 }
+
+// Vrai si au moins un réglage diffère des valeurs recommandées du protocole.
+export function paramsChanged(defaults, working) {
+  if (!defaults || !working) return false;
+  return Object.keys(defaults).some(k => defaults[k] !== working[k]);
+}

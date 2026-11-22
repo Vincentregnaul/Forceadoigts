@@ -44,7 +44,8 @@ Icônes : `node tools/make-app-icons.mjs assets/logo-source.png icons --granite`
 
 1. Choisis un protocole sur l'accueil (badge « échauffe-toi avant » sur les
    séances lourdes).
-2. Ajuste au besoin les temps, reps et séries.
+2. La séance part avec les réglages recommandés ; déplie « Ajuster les réglages »
+   si tu veux vraiment changer les temps, reps ou séries.
 3. « Démarrer » : l'app te guide à la voix (« Tension », « 3, 2, 1, repos »),
    avec bips et vibration. Garde le téléphone posé, écran allumé.
 

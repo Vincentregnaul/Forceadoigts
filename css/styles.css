@@ -96,6 +96,23 @@ body {
 .hint .icon { color: var(--prepare); margin-top: 0.15em; vertical-align: 0; }
 .safety { border-left: 3px solid var(--seam); padding-left: 12px; }
 
+/* Réglages repliés : la séance part avec les valeurs recommandées */
+.adjust { background: var(--slab); border: 1px solid var(--seam); border-radius: 12px; padding: 0 12px; }
+.adjust > summary {
+  min-height: 52px; display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none;
+  font-weight: 600; color: var(--chalk);
+}
+.adjust > summary::-webkit-details-marker { display: none; }
+.adjust > summary::after { content: '+'; margin-left: 4px; color: var(--dust); font-size: 1.3rem; line-height: 1; }
+.adjust[open] > summary::after { content: '–'; }
+.adjust > summary > span:first-child { flex: 1; }
+#config-adjust-state.changed { color: var(--prepare); background: var(--granite); border: 1px solid var(--seam); }
+.adjust .params { padding-bottom: 12px; }
+.adjust .param-row { background: var(--granite); }
+.link-reset {
+  min-height: 44px; margin: -4px 0 8px; padding: 0; background: none; border: none; cursor: pointer;
+  color: var(--chalk); font: inherit; font-size: 0.95rem; text-decoration: underline; text-decoration-color: var(--dust); text-underline-offset: 2px;
+}
 .params { display: flex; flex-direction: column; gap: 8px; }
 .param-row {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;

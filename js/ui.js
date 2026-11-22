@@ -1,5 +1,5 @@
 // ui.js — rend et met à jour les écrans. Aucune logique de minuterie.
-import { formatTime, progressFraction, intensityTone, specLine, chronoShape, fitFontSize } from './ui-helpers.js';
+import { formatTime, progressFraction, intensityTone, specLine, chronoShape, fitFontSize, paramsChanged } from './ui-helpers.js';
 import { initDust, countUp } from './motion.js';
 import { buildGuideHTML } from './guide-content.js';
 import { buildProgramsHTML } from './programs-content.js';
@@ -93,6 +93,7 @@ export function createUI(handlers) {
   $('btn-stop').addEventListener('click', () => handlers.onStop());
   $('btn-config-back').addEventListener('click', () => handlers.onHome());
   $('btn-start').addEventListener('click', () => handlers.onStart());
+  $('btn-reset-params').addEventListener('click', () => handlers.onResetParams());
   $('btn-restart').addEventListener('click', () => handlers.onRestart());
   $('btn-home').addEventListener('click', () => handlers.onHome());
   $('btn-open-guide').addEventListener('click', () => handlers.onOpenGuide());
@@ -129,14 +130,29 @@ export function createUI(handlers) {
     show('home');
   }
 
-  function showConfig(protocol, workingParams) {
+  // Fiche protocole : la séance part avec les réglages recommandés ; on ne les modifie
+  // qu'en dépliant « Ajuster les réglages ».
+  let cfgProtocol = null;
+  let cfgParams = null;
+
+  function updateAdjustState() {
+    const changed = paramsChanged(cfgProtocol.params, cfgParams);
+    $('config-spec').textContent = specLine(cfgParams ? { ...cfgProtocol, params: cfgParams } : cfgProtocol);
+    const state = $('config-adjust-state');
+    state.textContent = changed ? 'modifiés' : 'recommandés';
+    state.classList.toggle('changed', changed);
+    $('btn-reset-params').classList.toggle('hidden', !changed);
+  }
+
+  function showConfig(protocol, workingParams, { keepOpen = false } = {}) {
+    cfgProtocol = protocol;
+    cfgParams = workingParams;
     const lvl = protocol.intensity || 1;
     const cfg = $('screen-config');
     cfg.classList.remove('tone-rest', 'tone-prepare', 'tone-tension');
     cfg.classList.add(`tone-${intensityTone(lvl)}`);
     $('config-title').textContent = protocol.name;
     $('config-meta').textContent = `${protocol.goal} · ${protocol.grip}`;
-    $('config-spec').textContent = specLine(protocol);
     $('config-level').textContent = protocol.level;
     const gauge = $('config-gauge');
     gauge.setAttribute('aria-label', `Intensité ${lvl} sur 5`);
@@ -147,7 +163,11 @@ export function createUI(handlers) {
 
     const box = $('config-params');
     box.innerHTML = '';
-    if (workingParams && protocol.adjustable.length) {
+    const adjustable = Boolean(workingParams && protocol.adjustable.length);
+    $('config-adjust').classList.toggle('hidden', !adjustable);
+    $('config-adjust').open = adjustable && keepOpen;
+    $('config-guided').classList.toggle('hidden', adjustable);
+    if (adjustable) {
       for (const key of protocol.adjustable) {
         const row = document.createElement('div');
         row.className = 'param-row';
@@ -163,15 +183,16 @@ export function createUI(handlers) {
         row.querySelector('[data-act="inc"]').addEventListener('click', () => handlers.onAdjust(key, +1));
         box.appendChild(row);
       }
-    } else {
-      box.innerHTML = '<p class="meta">Enchaînement guidé, aucun réglage à faire.</p>';
     }
+    updateAdjustState();
     show('config');
+    if (keepOpen) $('config-adjust').querySelector('summary').focus();
   }
 
   function refreshParam(key, value) {
     const el = $(`val-${key}`);
     if (el) el.textContent = value;
+    if (cfgProtocol) updateAdjustState();
   }
 
   function showSession() {

@@ -44,8 +44,13 @@
       </div>
       <p id="warmup-hint" class="hint hidden" data-icon="alert">Protocole lourd — pense à lancer l'échauffement d'abord.</p>
       <p id="youth-hint" class="hint hidden" data-icon="alert">Moins de 18 ans : prudence, les cartilages de croissance des doigts sont fragiles. Une douleur sur le dos d'une articulation du doigt doit faire consulter.</p>
-      <div id="config-params" class="params"></div>
       <p id="config-safety" class="safety"></p>
+      <p id="config-guided" class="meta hidden">Enchaînement guidé, aucun réglage à faire.</p>
+      <details id="config-adjust" class="adjust">
+        <summary><span>Ajuster les réglages</span><span id="config-adjust-state" class="badge">recommandés</span></summary>
+        <div id="config-params" class="params"></div>
+        <button type="button" id="btn-reset-params" class="link-reset hidden">Revenir aux valeurs recommandées</button>
+      </details>
       <button id="btn-start" class="btn-primary">Démarrer</button>
     </section>
 

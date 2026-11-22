@@ -28,6 +28,7 @@ const ui = createUI({
   onSelectProtocol,
   onStart,
   onAdjust,
+  onResetParams,
   onPause,
   onSkip,
   onStop,
@@ -41,6 +42,11 @@ function onSelectProtocol(id) {
   currentProtocol = getProtocol(id);
   workingParams = currentProtocol.params ? { ...currentProtocol.params } : null;
   ui.showConfig(currentProtocol, workingParams);
+}
+
+function onResetParams() {
+  workingParams = { ...currentProtocol.params };
+  ui.showConfig(currentProtocol, workingParams, { keepOpen: true });
 }
 
 function onAdjust(key, dir) {
