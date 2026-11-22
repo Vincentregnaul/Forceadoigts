@@ -143,8 +143,8 @@ function onOpenGuide() {
   ui.showGuide();
 }
 
-function onOpenPrograms() {
-  ui.showPrograms();
+function onOpenPrograms(programId) {
+  ui.showPrograms(programId);
 }
 
 // Enregistrement du service worker (offline)

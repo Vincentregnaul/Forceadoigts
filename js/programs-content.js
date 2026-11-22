@@ -73,7 +73,7 @@ function gauge(lvl) {
 export function buildProgramsHTML() {
   const ordered = [...PROGRAMS].sort((a, b) => (b.featured === true) - (a.featured === true));
   const cards = ordered.map(p => `
-    <div class="program${p.featured ? ' featured' : ''}">
+    <div class="program${p.featured ? ' featured' : ''}" id="prog-${p.id}">
       <span class="program-badge${p.featured ? ' star' : ''}">${p.featured ? icon('star') : ''}${p.badge}</span>
       <h3>${p.name} ${gauge(p.intensity)}</h3>
       <p class="lead">${p.tagline}</p>

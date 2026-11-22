@@ -78,3 +78,8 @@ test('le tableau du guide suit les recommandations de l accueil', async () => {
     }
   }
 });
+
+test('chaque programme a une ancre pour y aller depuis l accueil', async () => {
+  const { PROGRAMS } = await import('../js/programs-content.js');
+  for (const p of PROGRAMS) assert.ok(programs.includes(`id="prog-${p.id}"`), p.id);
+});

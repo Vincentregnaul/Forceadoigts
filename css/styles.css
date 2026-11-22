@@ -259,7 +259,7 @@ body {
 .guide .mini-gauge.lvl-4 i.on, .guide .mini-gauge.lvl-5 i.on { background: var(--tension); }
 
 /* Programmes */
-.program { background: var(--slab); border: 1px solid var(--seam); border-radius: 14px; padding: 16px; margin: 14px 0; }
+.program { scroll-margin-top: 64px; background: var(--slab); border: 1px solid var(--seam); border-radius: 14px; padding: 16px; margin: 14px 0; }
 .program.featured { border-left: 4px solid var(--prepare); }
 .program-badge { display: inline-flex; align-items: center; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--seam); color: var(--dust); margin-bottom: 8px; }
 .program-badge.star { background: var(--granite); color: var(--prepare); }

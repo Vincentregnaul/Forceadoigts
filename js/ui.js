@@ -171,7 +171,7 @@ export function createUI(handlers) {
       <span class="card-name display">${reco.program.name}</span>
       <span class="spec num">${reco.program.duration}</span>
       <span class="slide-limit">Le plan semaine par semaine pour ton niveau.</span>`;
-    prog.addEventListener('click', () => handlers.onOpenPrograms());
+    prog.addEventListener('click', () => handlers.onOpenPrograms(reco.program.id));
     slides.push(prog);
     for (const s of slides) {
       // Au clavier, la fiche ciblée défile dans le cadre.
@@ -345,10 +345,17 @@ export function createUI(handlers) {
     show('guide');
   }
 
-  function showPrograms() {
+  // programId (optionnel) : ouvre ce programme et l'amène sous l'en-tête collant.
+  function showPrograms(programId) {
     $('programs-content').innerHTML = buildProgramsHTML();
     window.scrollTo(0, 0);
     show('programs');
+    const target = programId && document.getElementById(`prog-${programId}`);
+    if (target) {
+      const details = target.querySelector('details');
+      if (details) details.open = true;
+      target.scrollIntoView({ block: 'start' });
+    }
   }
 
   return { showHome, showConfig, refreshParam, showSession, updatePhase, updateTick, setNext, showSummary, showGuide, showPrograms, getSettings };
